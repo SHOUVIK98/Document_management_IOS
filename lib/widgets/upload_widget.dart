@@ -180,7 +180,7 @@ class _UploadWidgetState extends State<UploadWidget> {
       children: [
         UploadButton(
           onTap:(){
-            pickFiles(widget.isFolderUpload, widget.folderName?? "", widget.parentFolderId);
+           // pickFiles(widget.isFolderUpload, widget.folderName?? "", widget.parentFolderId);
             // Navigator.pop(context);
           },
           icon: Icons.upload_file,
