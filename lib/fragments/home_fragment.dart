@@ -464,7 +464,7 @@ class _HomeFragmentState extends State<HomeFragment> {
     return CustomScrollView(
       slivers: [
         CupertinoSliverRefreshControl(onRefresh: _refreshData),
-        SliverToBoxAdapter(
+        SliverFillRemaining(
           child: child,
         ),
       ],
