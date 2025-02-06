@@ -222,12 +222,21 @@ class _DocumentManagementEntryPointState
               ),
               const SizedBox(width: 12),
               // The trailing SearchBarWidget (assuming it’s already Cupertino-compatible):
-              const Padding(
+              // const Padding(
+              //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+              //   child: SearchBarWidget(),
+              // ),
+            ],
+          ),
+          trailing: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children : [
+                Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
                 child: SearchBarWidget(),
               ),
-            ],
-          ),
+            ]
+          )
         ),
         child: SafeArea(
           child: BottomNavigation(
