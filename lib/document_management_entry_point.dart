@@ -208,7 +208,7 @@ class _DocumentManagementEntryPointState
               color: _colorScheme.primary,
             ),
           ),
-          trailing: Row(
+          leading: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               // Example: an icon to open a 'drawer-like' modal
