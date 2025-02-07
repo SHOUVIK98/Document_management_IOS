@@ -222,17 +222,11 @@
 
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:flutter/material.dart' 
-    show 
-      ColorScheme, 
-      ThemeData, 
-      ThemeMode, 
-      Theme,
-      PageRouteBuilder,
-      Curves,
-      Offset,
-      Shimmer, // we still need to import Shimmer from pub dev if using it
-      SnackBar; 
+    show ColorScheme, Curves, MaterialApp, Offset, PageRouteBuilder, Shimmer, SnackBar, Theme, ThemeData, ThemeMode;
 // ^ We import just what we need from Material, mostly for color schemes, transitions, or Shimmer.
 
 import 'package:shimmer/shimmer.dart';
@@ -410,33 +404,64 @@ class _HomeFragmentState extends State<HomeFragment> {
         : _buildCupertinoRefreshView(currentView);
 
     return CupertinoPageScaffold(
-      // If you want a navigation bar, you can add it here:
-      // navigationBar: CupertinoNavigationBar(
-      //   middle: Text("Home"),
-      // ),
+        // If you want a navigation bar, you can add it here:
+        // navigationBar: CupertinoNavigationBar(
+        //   middle: Text("Home"),
+        // ),
 
-      // We use SafeArea + a Stack to place the "floating" button manually.
-      child: SafeArea(
-        child: Stack(
-          children: [
-            // Main content (list/grid + pull-to-refresh)
-            content,
+        // We use SafeArea + a Stack to place the "floating" button manually.
+        child: SafeArea(
+          child: Stack(
+            children: [
+              // Main content (list/grid + pull-to-refresh)
+              content,
 
-            // A manual "floating" button in the bottom-right corner
-            Positioned(
-              right: 16,
-              bottom: 16,
-              child: FloatingActionButtonWidget(
-                onFilesAdded: _onFilesAdded,
-                isFolderUpload: false,
-                folderName: "",
-                colorScheme: widget.colorScheme,
+              // A manual "floating" button in the bottom-right corner
+              Positioned(
+                right: 16,
+                bottom: 16,
+                child: FloatingActionButtonWidget(
+                  onFilesAdded: _onFilesAdded,
+                  isFolderUpload: false,
+                  folderName: "",
+                  colorScheme: widget.colorScheme,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+
+    // return CupertinoPageScaffold(
+    //   child: SafeArea(
+    //     child: Stack(
+    //       children: [
+    //         // Wrap content in Localizations
+    //         Localizations(
+    //           delegates: const [
+    //             GlobalMaterialLocalizations.delegate,
+    //             GlobalWidgetsLocalizations.delegate,
+    //           ],
+    //           locale: Locale('en', 'US'),
+    //           child: content,  // Your GridView or ListView
+    //         ),
+    //
+    //         // Floating Action Button
+    //         Positioned(
+    //           right: 16,
+    //           bottom: 16,
+    //           child: FloatingActionButtonWidget(
+    //             onFilesAdded: _onFilesAdded,
+    //             isFolderUpload: false,
+    //             folderName: "",
+    //             colorScheme: widget.colorScheme,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+
   }
 
   /// Builds a shimmer-based placeholder while data loads.

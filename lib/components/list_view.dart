@@ -190,6 +190,7 @@
 
 
 // IOS CODE 
+import 'package:document_management_main/utils/show_bottom_modal_options_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' 
     show ColorScheme, Curves, Offset, PageRouteBuilder, Theme, showModalBottomSheet; // We might keep this if the bottom sheet is still material-based
@@ -246,6 +247,7 @@ class CustomListView extends StatelessWidget {
             // Remove default padding for a more "list-like" feel:
             padding: EdgeInsets.zero,
             onPressed: () => _handleItemTap(context, item),
+            onLongPress: ()=>  showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId),
             child: Row(
               children: [
                 // Leading icon
@@ -298,14 +300,14 @@ class CustomListView extends StatelessWidget {
                 ),
 
                 // Trailing options (the "3 dots")
-                CupertinoButton(
-                  padding: const EdgeInsets.all(8.0),
-                  onPressed: () => _showOptions(context, item),
-                  child: Icon(
-                    CupertinoIcons.ellipsis_vertical,
-                    color: colorScheme.secondary,
-                  ),
-                ),
+                // CupertinoButton(
+                //   padding: const EdgeInsets.all(8.0),
+                //   onPressed: () => _showOptions(context, item),
+                //   child: Icon(
+                //     CupertinoIcons.ellipsis_vertical,
+                //     color: colorScheme.secondary,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -402,28 +404,22 @@ class CustomListView extends StatelessWidget {
   }
 
   /// Show iOS-style bottom popup (instead of Material bottom sheet)
-  void _showOptions(BuildContext context, FileItemNew item) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext ctx) {
-        // If you want to keep your existing Material bottom sheet design,
-        // you can wrap it in a CupertinoPopupSurface or use a CupertinoActionSheet.
-        // For simplicity, let's just embed your existing bottom sheet widget:
-        return CupertinoPopupSurface(
-          isSurfacePainted: true, // gives it a white “cupped” look
-          child: SafeArea(
-            top: false,
-            child: BottomModalOptions(
-              item,
-              onStarred: onStarred,
-              renameFolder: renameFolder,
-              deleteItem: deleteItem,
-              isTrashed: isTrashed,
-              parentFolderId: parentFolderId,
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // void _showOptions(BuildContext context, FileItemNew item) {
+  //   showCupertinoModalPopup(
+  //     context: context,
+  //     builder: (BuildContext ctx) {
+  //       // If you want to keep your existing Material bottom sheet design,
+  //       // you can wrap it in a CupertinoPopupSurface or use a CupertinoActionSheet.
+  //       // For simplicity, let's just embed your existing bottom sheet widget:
+  //       return BottomModalOptions(
+  //         item,
+  //         onStarred: onStarred,
+  //         renameFolder: renameFolder,
+  //         deleteItem: deleteItem,
+  //         isTrashed: isTrashed,
+  //         parentFolderId: parentFolderId,
+  //       );
+  //     },
+  //   );
+  // }
 }

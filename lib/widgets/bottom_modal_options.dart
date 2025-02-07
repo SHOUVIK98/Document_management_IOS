@@ -15,7 +15,6 @@
 //   final bool? isTrashed;
 //   final dynamic parentFolderId;
 
-
 //   const BottomModalOptions(this.itemData, {this.onStarred, super.key, this.renameFolder, this.deleteItem, this.isTrashed, this.parentFolderId});
 
 //   @override
@@ -49,7 +48,6 @@
 //       taskId= folderInstanceData[0]["taskId"];
 
 //       bool result =  await IKonService.iKonService.invokeAction(taskId: taskId,transitionName: "Update Editor Access",data: {"folder_identifier":itemData.identifier,"folderName":itemData.name}, processIdentifierFields: null);
-
 
 //     }
 
@@ -117,7 +115,7 @@
 
 //           ListView(
 //             shrinkWrap: true,
-//             children: (isTrashed != null && isTrashed == true) ? 
+//             children: (isTrashed != null && isTrashed == true) ?
 //             [
 //                     _buildOption(
 //                       context,
@@ -135,7 +133,7 @@
 //                         // Handle restore action
 //                       },
 //                     ),
-//                   ] : 
+//                   ] :
 //             [
 //               if (itemData.isFolder)
 //                 _buildOption(
@@ -266,17 +264,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
 // IOS LOOK AND FEEL CODE:
 
 import 'package:flutter/cupertino.dart';
@@ -337,7 +324,14 @@ class BottomModalOptions extends StatelessWidget {
       print(folderInstanceData[0]["taskId"]);
       taskId = folderInstanceData[0]["taskId"];
 
-       bool result =  await IKonService.iKonService.invokeAction(taskId: taskId,transitionName: "Update Editor Access",data: {"folder_identifier":itemData.identifier,"folderName":itemData.name}, processIdentifierFields: null);
+      bool result = await IKonService.iKonService.invokeAction(
+          taskId: taskId,
+          transitionName: "Update Editor Access",
+          data: {
+            "folder_identifier": itemData.identifier,
+            "folderName": itemData.name
+          },
+          processIdentifierFields: null);
     }
 
     void _cutOrCopyDocument(isFolder, cutOrCopied, identifier) {
@@ -363,109 +357,166 @@ class BottomModalOptions extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      message: Container(
-        height: 400,
-        child: ListView(
-          children: (isTrashed != null && isTrashed == true)
-              ? [
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      // Handle delete permanently action
-                    },
-                    child: const Text("Delete Permanently"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      // Handle restore action
-                    },
-                    child: const Text("Restore"),
-                  ),
-                ]
-              : [
-                  if (itemData.isFolder)
-                    CupertinoActionSheetAction(
-                      onPressed: () async {
-                        showDialog(
-                          context: context,
-                          builder: (_) => FolderDialog(
-                            folderData: itemData,
-                            renameFolder: renameFolder,
-                          ),
-                        );
-                        Navigator.pop(context);
-                        print("Rename option selected");
-                      },
-                      child: const Text("Rename"),
-                    ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the modal
-                      bool isFolder = itemData.isFolder;
-                      String cutOrCopied = "cut";
-                      String identifier = itemData.identifier;
-                      _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
-                      pasteDocument("home", context);
-                    },
-                    child: const Text("Move to Home"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the modal
-                      bool isFolder = itemData.isFolder;
-                      String cutOrCopied = "cut";
-                      String identifier = itemData.identifier;
-                      _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
-                    },
-                    child: const Text("Cut"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the modal
-                      bool isFolder = itemData.isFolder;
-                      String cutOrCopied = "copy";
-                      String identifier = itemData.identifier;
-                      _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
-                    },
-                    child: const Text("Copy"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the modal
-                      if (itemData.isFolder) {
-                        String destinationIdentifier = itemData.identifier;
-                        pasteDocument(
-                          destinationItem: itemData,
-                          destinationIdentifier,
-                          context,
-                        );
-                      }
-                      print("Share option selected");
-                    },
-                    child: const Text("Paste"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      if (onStarred != null) {
-                        onStarred!(itemData);
-                      }
-                      Navigator.pop(context); // Close the modal
-                      print("Add to Starred option selected");
-                    },
-                    child: Text(itemData.isStarred
-                        ? "Remove from Starred"
-                        : "Add to Starred"),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the modal
-                      deleteItem!(itemData, parentFolderId);
-                      print("Delete option selected");
-                    },
-                    child: const Text("Move to Trash"),
-                  ),
-                ],
-        ),
-      ),
+      // Build actions conditionally
+      actions: [
+        // If it's NOT trashed, show all the "normal" actions
+        if (!(isTrashed ?? false)) ...[
+          CupertinoActionSheetAction(
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (_) => FolderDialog(
+                  folderData: itemData,
+                  renameFolder: renameFolder,
+                ),
+              );
+              Navigator.pop(context);
+              print("Rename option selected");
+            },
+            child: const Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.drive_file_rename_outline),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Rename")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              bool isFolder = itemData.isFolder;
+              String cutOrCopied = "cut";
+              String identifier = itemData.identifier;
+              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              pasteDocument("home", context);
+            },
+            child: const Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.home),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Move to Home")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              bool isFolder = itemData.isFolder;
+              String cutOrCopied = "cut";
+              String identifier = itemData.identifier;
+              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.cut),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Cut")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              bool isFolder = itemData.isFolder;
+              String cutOrCopied = "copy";
+              String identifier = itemData.identifier;
+              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.copy),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Copy")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              if (itemData.isFolder) {
+                String destinationIdentifier = itemData.identifier;
+                pasteDocument(
+                  destinationItem: itemData,
+                  destinationIdentifier,
+                  context,
+                );
+              }
+              print("Paste option selected");
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.paste),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Paste")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              if (onStarred != null) {
+                onStarred!(itemData);
+              }
+              Navigator.pop(context); // Close the modal
+              print("Add/Remove Starred option selected");
+            },
+            child: Text(
+                itemData.isStarred ? "Remove from Starred" : "Add to Starred"),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              deleteItem!(itemData, parentFolderId);
+              print("Move to Trash option selected");
+            },
+            child: const Text("Move to Trash"),
+          ),
+        ],
+
+        // If it's trashed, show the "trash" actions
+        if (isTrashed == true) ...[
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              // Handle delete permanently action
+              print("Delete Permanently selected");
+            },
+            child: const Text("Delete Permanently"),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              // Handle restore action
+              print("Restore selected");
+            },
+            child: const Text("Restore"),
+          ),
+        ],
+      ],
       cancelButton: CupertinoActionSheetAction(
         onPressed: () => Navigator.of(context).pop(),
         child: const Text("Close"),

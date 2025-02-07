@@ -1,25 +1,33 @@
 import 'package:document_management_main/data/file_class.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:document_management_main/widgets/folder_screen_widget.dart';
-
+import 'package:document_management_main/utils/show_bottom_modal_options_util.dart';
 import '../data/create_fileStructure.dart';
 import '../files_viewer/image_viewer_page.dart';
 import '../files_viewer/pdf_viewer_page.dart';
 import '../files_viewer/text_viewer_page.dart';
 import '../widgets/bottom_modal_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class GridLayout extends StatelessWidget {
   final List<FileItemNew> items;
-  final Function(FileItemNew)? onStarred;
   final ColorScheme colorScheme;
+  final Function(FileItemNew)? onStarred;
   final Function(String, FileItemNew item)? renameFolder;
   final Function(FileItemNew item, dynamic parentFolderId)? deleteItem;
   final bool isTrashed;
   final dynamic parentFolderId;
 
   // final bool isLightTheme;
-
+  /*
+  * onStarred: onStarred,
+          renameFolder: renameFolder,
+          deleteItem: deleteItem,
+          isTrashed: isTrashed,
+          parentFolderId: parentFolderId,
+  * */
   const GridLayout(
       {super.key,
       required this.items,
@@ -30,25 +38,52 @@ class GridLayout extends StatelessWidget {
       this.isTrashed = false,
       this.parentFolderId});
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   final isLight = Theme.of(context).brightness == Brightness.light;
+  //   // print("islight $isLight");
+  //
+  //   return GridView.builder(
+  //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //       crossAxisCount: 3,
+  //       crossAxisSpacing: 0.0,
+  //       mainAxisSpacing: 0.0,
+  //       childAspectRatio: 0.5,
+  //     ),
+  //     itemCount: items.length,
+  //     itemBuilder: (context, index) {
+  //       final item = items[index];
+  //       return _buildGridLayout(item, context, isLight);
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-    // print("islight $isLight");
 
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 8.0,
-        mainAxisSpacing: 8.0,
-        childAspectRatio: 1.0,
+    return Localizations(
+      delegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      locale: Locale('en', 'US'),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 0.0,
+          mainAxisSpacing: 0.0,
+          childAspectRatio: 1.0,
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return _buildGridLayout(item, context, isLight);
+        },
       ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        final item = items[index];
-        return _buildGridLayout(item, context, isLight);
-      },
     );
   }
+
 
   Widget _buildGridLayout(dynamic item, BuildContext context, bool isLight) {
     String itemName = item.name.toString();
@@ -56,6 +91,9 @@ class GridLayout extends StatelessWidget {
         itemName.length > 10 ? itemName.substring(0, 10) + '...' : itemName;
 
     return GestureDetector(
+      onLongPress: (){
+        showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId);
+      },
       onTap: () {
         String fileName = item.name;
         print("Item tapped: ${item.name}");
@@ -137,10 +175,10 @@ class GridLayout extends StatelessWidget {
                 ),
                 SvgPicture.asset(
                   item.icon,
-                  height: 90.0,
+                  height: 70.0,
                   width: 90.0,
                 ),
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 4.0),
                 Text(
                   itemName,
                   style: TextStyle(
@@ -202,4 +240,23 @@ class GridLayout extends StatelessWidget {
       ),
     );
   }
+
+  // void _showOptions(BuildContext context, FileItemNew item) {
+  //   showCupertinoModalPopup(
+  //     context: context,
+  //     builder: (BuildContext ctx) {
+  //       // If you want to keep your existing Material bottom sheet design,
+  //       // you can wrap it in a CupertinoPopupSurface or use a CupertinoActionSheet.
+  //       // For simplicity, let's just embed your existing bottom sheet widget:
+  //       return BottomModalOptions(
+  //         item,
+  //         onStarred: onStarred,
+  //         renameFolder: renameFolder,
+  //         deleteItem: deleteItem,
+  //         isTrashed: isTrashed,
+  //         parentFolderId: parentFolderId,
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -189,66 +189,66 @@ class _DocumentManagementEntryPointState
         _isDarkMode ? Brightness.dark : Brightness.light;
 
     return CupertinoApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Document Management',
-      // Apply some Cupertino theming based on our colorScheme:
-      theme: CupertinoThemeData(
-        brightness: brightness,
-        primaryColor: _colorScheme.primary,
-        // You can also adjust text styles, etc.
-      ),
-      home: CupertinoPageScaffold(
-        // iOS typically doesn’t have a “Drawer,” so consider a custom side menu
-        // or a modal sheet. For demonstration, we show a button in the nav bar
-        // that triggers a Cupertino-style modal to replicate the “drawer” content.
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(
-            "Document Management",
-            style: TextStyle(
-              color: _colorScheme.primary,
-            ),
+        debugShowCheckedModeBanner: false,
+          title: 'Document Management',
+          // Apply some Cupertino theming based on our colorScheme:
+          theme: CupertinoThemeData(
+            brightness: brightness,
+            primaryColor: _colorScheme.primary,
+            // You can also adjust text styles, etc.
           ),
-          leading: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Example: an icon to open a 'drawer-like' modal
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: _showDrawerModal, // see method below
-                child: Icon(
-                  CupertinoIcons.square_list,
+          home: CupertinoPageScaffold(
+            // iOS typically doesn’t have a “Drawer,” so consider a custom side menu
+            // or a modal sheet. For demonstration, we show a button in the nav bar
+            // that triggers a Cupertino-style modal to replicate the “drawer” content.
+            navigationBar: CupertinoNavigationBar(
+              middle: Text(
+                "Document Management",
+                style: TextStyle(
                   color: _colorScheme.primary,
                 ),
               ),
-              const SizedBox(width: 12),
-              // The trailing SearchBarWidget (assuming it’s already Cupertino-compatible):
-              // const Padding(
-              //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-              //   child: SearchBarWidget(),
-              // ),
-            ],
-          ),
-          trailing: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children : [
-                Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                child: SearchBarWidget(),
+              leading: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Example: an icon to open a 'drawer-like' modal
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: _showDrawerModal, // see method below
+                    child: Icon(
+                      CupertinoIcons.square_list,
+                      color: _colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  // The trailing SearchBarWidget (assuming it’s already Cupertino-compatible):
+                  // const Padding(
+                  //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                  //   child: SearchBarWidget(),
+                  // ),
+                ],
               ),
-            ]
-          )
-        ),
-        child: SafeArea(
-          child: BottomNavigation(
-            colorScheme: _colorScheme,
-            themeMode: themeMode,
-            isDarkMode: _isDarkMode,
-            updateTheme: _updateTheme,
-            updateColorScheme: _updateColorScheme,
+              trailing: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children : [
+                    Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                    child: SearchBarWidget(),
+                  ),
+                ]
+              )
+            ),
+            child: SafeArea(
+              child: BottomNavigation(
+                colorScheme: _colorScheme,
+                themeMode: themeMode,
+                isDarkMode: _isDarkMode,
+                updateTheme: _updateTheme,
+                updateColorScheme: _updateColorScheme,
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        );
   }
 
   // Example method to show a Cupertino-style “drawer”
