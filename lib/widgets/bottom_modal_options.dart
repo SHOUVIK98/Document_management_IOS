@@ -370,7 +370,7 @@ class BottomModalOptions extends StatelessWidget {
                   renameFolder: renameFolder,
                 ),
               );
-              Navigator.pop(context);
+              // Navigator.pop(context);
               print("Rename option selected");
             },
             child: const Row(
@@ -410,7 +410,7 @@ class BottomModalOptions extends StatelessWidget {
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pop(context); // Close the modal
+             // Navigator.pop(context); // Close the modal
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "cut";
               String identifier = itemData.identifier;
@@ -452,7 +452,7 @@ class BottomModalOptions extends StatelessWidget {
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pop(context); // Close the modal
+             // Navigator.pop(context); // Close the modal
               if (itemData.isFolder) {
                 String destinationIdentifier = itemData.identifier;
                 pasteDocument(
@@ -481,11 +481,21 @@ class BottomModalOptions extends StatelessWidget {
               if (onStarred != null) {
                 onStarred!(itemData);
               }
-              Navigator.pop(context); // Close the modal
+             // Navigator.pop(context); // Close the modal
               print("Add/Remove Starred option selected");
             },
-            child: Text(
-                itemData.isStarred ? "Remove from Starred" : "Add to Starred"),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.star),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(itemData.isStarred ? "Remove from Starred" : "Add to Starred"),
+              ],
+            ),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -493,7 +503,18 @@ class BottomModalOptions extends StatelessWidget {
               deleteItem!(itemData, parentFolderId);
               print("Move to Trash option selected");
             },
-            child: const Text("Move to Trash"),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(Icons.delete_forever_outlined),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Move to Trash")
+              ],
+            ),
           ),
         ],
 

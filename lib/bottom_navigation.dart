@@ -165,6 +165,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             currentPageIndex = index;
           });
         },
+
+//
         activeColor: widget.colorScheme.primary, // or any accent color
         inactiveColor: widget.colorScheme.onSurface.withOpacity(0.6),
         backgroundColor: widget.colorScheme.background,

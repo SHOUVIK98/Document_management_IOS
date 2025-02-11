@@ -802,8 +802,8 @@ class IKonService {
     required String password,
     required String phone,
     required String email,
-    required dynamic thumbnail,
-  }) async {
+    required dynamic thumbnail})
+  async {
     try {
       final headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
