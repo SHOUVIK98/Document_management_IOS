@@ -155,6 +155,7 @@
 
 // IOS LOOK AND FEEL CODE
 
+import 'package:document_management_main/utils/file_data_service_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show ColorScheme, Offset, PageRouteBuilder, SlideTransition, Theme; 
 // ^ We still need Material symbols for things like ColorScheme or custom transitions.
@@ -167,8 +168,6 @@ import '../files_viewer/pdf_viewer_page.dart';
 import '../files_viewer/text_viewer_page.dart';
 import '../utils/file_data_service_util.dart';
 import 'folder_screen_widget.dart';
-import '';
-
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({super.key});
 
@@ -197,7 +196,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   void _openSearchPage() {
     Navigator.of(context).push(
       CupertinoPageRoute(
-        builder: (context) => _SearchPage(
+        builder: (context) => SearchPage(
           onSearch: _searchAllItems,
         ),
       ),
@@ -216,19 +215,19 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
 /// A dedicated iOS-style search page with a search bar at the top
 /// and a list of results below.
-class _SearchPage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   final List<FileItemNew> Function(String query, List<FileItemNew> items) onSearch;
 
-  const _SearchPage({
+  const SearchPage({
     Key? key,
     required this.onSearch,
   }) : super(key: key);
 
   @override
-  State<_SearchPage> createState() => _SearchPageState();
+  State<SearchPage> createState() => SearchPageState();
 }
 
-class _SearchPageState extends State<_SearchPage> {
+class SearchPageState extends State<SearchPage> {
   final TextEditingController _controller = TextEditingController();
   List<FileItemNew> _searchResults = [];
 

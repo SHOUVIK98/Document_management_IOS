@@ -68,6 +68,6 @@ Future<List<FileItemNew>> fetchFileStructure() async {
 }
 
 List<FileItemNew> allItems = [];
-void getItemDataNew(items){
+void getItemData(items){
   allItems = items;
 }

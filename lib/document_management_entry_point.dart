@@ -119,6 +119,7 @@
 
 // IOS LOOK AND FEEL CODE
 
+import 'package:document_management_main/data/create_fileStructure.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // May still need for ColorScheme & other references
 import 'package:document_management_main/widgets/search_bar_widget.dart';
@@ -126,6 +127,8 @@ import 'bottom_navigation.dart';
 import 'data/profile_page_menu_data.dart';
 import 'dart:io';
 import 'package:menu_submenu_sidebar_dropdown_accordian_package/menu_submenu_sidebar_dropdown_accordian_package.dart';
+
+import 'widgets/search_bar_widget_ios.dart';
 
 class DocumentManagementEntryPoint extends StatefulWidget {
   const DocumentManagementEntryPoint({super.key});
@@ -140,6 +143,7 @@ class _DocumentManagementEntryPointState
   bool _isDarkMode = false;
   late ColorScheme _colorScheme;
   late ThemeMode themeMode;
+  final List<FileItemNew> filteredFiles = [];
 
   @override
   void initState() {
@@ -181,6 +185,11 @@ class _DocumentManagementEntryPointState
     // e.g., setState(() { /* navigate to or show new widget */ });
   }
 
+  void setFilteredData(List<String> filteredFiles) {
+    setState(() {
+      filteredFiles = filteredFiles;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // Because CupertinoApp doesn’t have a direct darkTheme property,
@@ -239,12 +248,15 @@ class _DocumentManagementEntryPointState
               )
             ),
             child: SafeArea(
-              child: BottomNavigation(
-                colorScheme: _colorScheme,
-                themeMode: themeMode,
-                isDarkMode: _isDarkMode,
-                updateTheme: _updateTheme,
-                updateColorScheme: _updateColorScheme,
+              child: FileSearchScreen(
+                setFilteredData: setFilteredData,
+                child: BottomNavigation(
+                  colorScheme: _colorScheme,
+                  themeMode: themeMode,
+                  isDarkMode: _isDarkMode,
+                  updateTheme: _updateTheme,
+                  updateColorScheme: _updateColorScheme,
+                ),
               ),
             ),
           ),

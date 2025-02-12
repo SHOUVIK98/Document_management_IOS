@@ -342,6 +342,8 @@ import 'package:document_management_main/data/create_fileStructure.dart';
 import 'package:document_management_main/data/file_class.dart';
 import 'package:document_management_main/utils/delete_item_utils.dart';
 import 'package:document_management_main/widgets/floating_action_button_widget.dart';
+
+import 'search_bar_widget_ios.dart';
 // import 'package:document_management_main/data/file_data.dart';
 
 class FolderScreenWidget extends StatefulWidget {
@@ -447,6 +449,12 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
     });
   }
 
+  void setFilteredData(List<String> filteredFiles) {
+    setState(() {
+      filteredFiles = filteredFiles;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -478,45 +486,48 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
           ],
         ),
       ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            if (currentItems.isNotEmpty)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Icon(localIsGridView
-                        ? CupertinoIcons.list_bullet
-                        : CupertinoIcons.square_grid_2x2),
-                    onPressed: _toggleViewMode,
-                  ),
-                  const SizedBox(width: 28.0),
-                ],
-              ),
-            Expanded(
-              child: localIsGridView
-                  ? GridLayout(
-                      items: currentItems,
-                      onStarred: _addToStarred,
-                      colorScheme: widget.colorScheme,
-                      parentFolderId: widget.parentId,
-                      renameFolder: _renameFolder,
-                      deleteItem: _deleteFileOrFolder,
-                      isTrashed: widget.isTrashed,
-                    )
-                  : CustomListView(
-                      items: currentItems,
-                      onStarred: _addToStarred,
-                      colorScheme: widget.colorScheme,
-                      parentFolderId: widget.parentId,
-                      renameFolder: _renameFolder,
-                      deleteItem: _deleteFileOrFolder,
-                      isTrashed: widget.isTrashed,
+      child: FileSearchScreen(
+        setFilteredData: setFilteredData,
+        child: SafeArea(
+          child: Column(
+            children: [
+              if (currentItems.isNotEmpty)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: Icon(localIsGridView
+                          ? CupertinoIcons.list_bullet
+                          : CupertinoIcons.square_grid_2x2),
+                      onPressed: _toggleViewMode,
                     ),
-            ),
-          ],
+                    const SizedBox(width: 28.0),
+                  ],
+                ),
+              Expanded(
+                child: localIsGridView
+                    ? GridLayout(
+                        items: currentItems,
+                        onStarred: _addToStarred,
+                        colorScheme: widget.colorScheme,
+                        parentFolderId: widget.parentId,
+                        renameFolder: _renameFolder,
+                        deleteItem: _deleteFileOrFolder,
+                        isTrashed: widget.isTrashed,
+                      )
+                    : CustomListView(
+                        items: currentItems,
+                        onStarred: _addToStarred,
+                        colorScheme: widget.colorScheme,
+                        parentFolderId: widget.parentId,
+                        renameFolder: _renameFolder,
+                        deleteItem: _deleteFileOrFolder,
+                        isTrashed: widget.isTrashed,
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );
