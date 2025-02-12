@@ -881,7 +881,7 @@ class _StarredFragmentState extends State<StarredFragment> {
                       ? const Center(
                           child: Text("No starred items"),
                         )
-                      : localIsGridView
+                      : widget.isGridView
                           ? GridLayout(
                               items: starredItems,
                               onStarred: _addToStarred,

@@ -231,7 +231,7 @@ import 'package:flutter/material.dart'
 
 import 'package:shimmer/shimmer.dart';
 import 'package:document_management_main/components/grid_view.dart';
-import 'package:document_management_main/data/file_data.dart';
+// import 'package:document_management_main/data/file_data.dart';
 import 'package:document_management_main/utils/rename_folder_utils.dart';
 import 'package:document_management_main/components/list_view.dart';
 import 'package:document_management_main/utils/Starred_item_utils.dart';
@@ -286,6 +286,7 @@ class _HomeFragmentState extends State<HomeFragment> {
     try {
       // Use our helper function to fetch the entire file structure.
       final fileStructure = await fetchFileStructure();
+      getItemData(fileStructure);
 
       // Remove any deleted files.
       removeDeletedFilesMine(fileStructure);
