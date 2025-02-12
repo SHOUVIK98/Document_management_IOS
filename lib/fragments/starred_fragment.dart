@@ -831,7 +831,6 @@ class _StarredFragmentState extends State<StarredFragment> {
   @override
   Widget build(BuildContext context) {
     final List<FileItemNew> starredItems = _getStarredFiles(allItems);
-
     return CupertinoPageScaffold(
       // navigationBar: CupertinoNavigationBar(
       //   middle: Text(
@@ -858,7 +857,7 @@ class _StarredFragmentState extends State<StarredFragment> {
       //   ),
       // ),
       child: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
             if (starredItems.isNotEmpty)
               // Row(
@@ -881,7 +880,7 @@ class _StarredFragmentState extends State<StarredFragment> {
                       ? const Center(
                           child: Text("No starred items"),
                         )
-                      : localIsGridView
+                      : widget.isGridView
                           ? GridLayout(
                               items: starredItems,
                               onStarred: _addToStarred,
@@ -895,12 +894,17 @@ class _StarredFragmentState extends State<StarredFragment> {
                               renameFolder: _renameFolder,
                             ),
             ),
+            Positioned(right: 16,bottom: 16,
+                child: FloatingActionButtonWidget(
+                    folderName: "",
+                    onFilesAdded: _onFilesAdded,
+                    isFolderUpload: false,
+                    colorScheme: widget.colorScheme))
           ],
         ),
       ),
     );
   }
-
   // Example method for renaming a folder (can be replaced with actual functionality)
   Future<void> _renameFolder(String newName, FileItemNew? item) async {
     setState(() {
@@ -914,7 +918,6 @@ class _StarredFragmentState extends State<StarredFragment> {
     setState(() {
       item.isDeleted = true;
     });
-
     // Delete functionality here...
   }
 }

@@ -392,7 +392,7 @@ class BottomModalOptions extends StatelessWidget {
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "cut";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier,itemData);
               pasteDocument("home", context);
             },
             child: const Row(
@@ -414,7 +414,7 @@ class BottomModalOptions extends StatelessWidget {
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "cut";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier,itemData);
             },
             child: Row(
               children: [
@@ -435,7 +435,7 @@ class BottomModalOptions extends StatelessWidget {
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "copy";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier,itemData);
             },
             child: Row(
               children: [
@@ -456,9 +456,9 @@ class BottomModalOptions extends StatelessWidget {
               if (itemData.isFolder) {
                 String destinationIdentifier = itemData.identifier;
                 pasteDocument(
-                  destinationItem: itemData,
                   destinationIdentifier,
                   context,
+                  destinationItem: itemData,
                 );
               }
               print("Paste option selected");

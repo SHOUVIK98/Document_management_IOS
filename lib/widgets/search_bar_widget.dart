@@ -160,12 +160,14 @@ import 'package:flutter/material.dart' show ColorScheme, Offset, PageRouteBuilde
 // ^ We still need Material symbols for things like ColorScheme or custom transitions.
 //   But the UI components below are Cupertino-based.
 
-import 'package:document_management_main/data/file_data.dart';
+// import 'package:document_management_main/data/file_data.dart';
 import '../data/create_fileStructure.dart';
 import '../files_viewer/image_viewer_page.dart';
 import '../files_viewer/pdf_viewer_page.dart';
 import '../files_viewer/text_viewer_page.dart';
+import '../utils/file_data_service_util.dart';
 import 'folder_screen_widget.dart';
+import '';
 
 class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({super.key});
@@ -175,7 +177,6 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-
   /// The same search logic used previously.
   List<FileItemNew> _searchAllItems(String query, List<FileItemNew> items) {
     final results = <FileItemNew>[];

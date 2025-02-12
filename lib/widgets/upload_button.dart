@@ -1,4 +1,47 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+//
+// class UploadButton extends StatelessWidget {
+//   final VoidCallback onTap;
+//   final IconData icon;
+//   final String label;
+//
+//   const UploadButton({
+//     Key? key,
+//     required this.onTap,
+//     required this.icon,
+//     required this.label,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final isLightTheme = Theme.of(context).brightness == Brightness.light;
+//
+//     return Column(
+//       children: [
+//         InkWell(
+//           onTap: onTap,
+//           child: Container(
+//             width: 60,
+//             height: 60,
+//             decoration: BoxDecoration(
+//               shape: BoxShape.circle,
+//               color: Colors.grey[200],
+//             ),
+//             child: Icon(icon, color: Colors.black),
+//           ),
+//         ),
+//         const SizedBox(height: 8),
+//         Text(
+//           label,
+//           style: TextStyle(fontSize: 12, color: isLightTheme ? Colors.black : Colors.white),
+//         ),
+//         const SizedBox(height: 16),
+//       ],
+//     );
+//   }
+// }
+
+import 'package:flutter/cupertino.dart';
 
 class UploadButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -14,26 +57,28 @@ class UploadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
-
     return Column(
       children: [
-        InkWell(
-          onTap: onTap,
+        CupertinoButton(
+          onPressed: onTap,
+          padding: EdgeInsets.zero, // Removes default padding
           child: Container(
             width: 60,
             height: 60,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.grey[200],
+              color: CupertinoColors.systemGrey5, // Matches iOS style
             ),
-            child: Icon(icon, color: Colors.black),
+            child: Icon(icon, color: CupertinoColors.black),
           ),
         ),
         const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: isLightTheme ? Colors.black : Colors.white),
+          style: TextStyle(
+            fontSize: 12,
+            color: CupertinoColors.label,
+          ),
         ),
         const SizedBox(height: 16),
       ],
