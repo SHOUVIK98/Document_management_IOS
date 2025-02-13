@@ -555,7 +555,7 @@ class _HomeFragmentState extends State<HomeFragment> {
     try {
       final fileStructure = await fetchFileStructure();
       removeDeletedFilesMine(fileStructure);
-      getItemDataNew(fileStructure);
+      getItemData(fileStructure);
 
       setState(() {
         currentItems = fileStructure;

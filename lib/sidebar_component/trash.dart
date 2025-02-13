@@ -1,5 +1,6 @@
 import 'package:document_management_main/data/create_fileStructure.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart'; // For ColorScheme and other references
 import 'package:document_management_main/apis/ikon_service.dart';
 import 'package:document_management_main/components/grid_view.dart';
 import 'package:document_management_main/components/list_view.dart';
@@ -48,7 +49,6 @@ class _TrashState extends State<Trash> {
     try {
       // 1. Fetch all file/folder data
       final newAllItems = await fetchFileStructure();
-      // fetchFileStructure() should be an async function returning List<FileItemNew>
 
       // 2. Filter out trashed items
       final List<FileItemNew> newTrashed = [];
@@ -65,8 +65,18 @@ class _TrashState extends State<Trash> {
         _isLoading = false;
       });
       // Optionally show an error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading trash data: $e')),
+      showCupertinoDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text("Error"),
+          content: Text("Error loading trash data: $e"),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text("OK"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
       );
     }
   }
@@ -101,32 +111,33 @@ class _TrashState extends State<Trash> {
           : Brightness.light,
     );
 
-    return Theme(
-      data: themeData,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Trash"),
-          leading: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Icon(Icons.arrow_back),
-            ),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text("Trash"),
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.pop(context),
+          child: Icon(
+            CupertinoIcons.back,
+            color: widget.colorScheme.secondary,
           ),
         ),
-        body: _isLoading
-            ? const Center(child: CircularProgressIndicator())
+      ),
+      child: SafeArea(
+        child: _isLoading
+            ? const Center(child: CupertinoActivityIndicator())
             : Column(
           children: [
             if (trashedItems.isNotEmpty)
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    icon: Icon(
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Icon(
                       localIsGridView
-                          ? Icons.view_list
-                          : Icons.grid_view,
+                          ? CupertinoIcons.list_bullet
+                          : CupertinoIcons.square_grid_2x2,
                     ),
                     onPressed: _toggleViewMode,
                   ),

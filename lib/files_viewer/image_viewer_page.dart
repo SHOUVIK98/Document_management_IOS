@@ -1,3 +1,4 @@
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -22,6 +23,15 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
   void initState() {
     super.initState();
     _downloadAndSaveImage(widget.imagePath);
+    if (widget.imagePath.contains('http') || widget.imagePath.contains('https')) {
+      _downloadAndSaveImage(widget.imagePath);
+    } else {
+      // Handle local mobile file path
+      setState(() {
+        localImagePath = widget.imagePath;
+        isLoading = false;
+      });
+    }
   }
 
   Future<void> _downloadAndSaveImage(String url) async {

@@ -1,3 +1,4 @@
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,6 +23,15 @@ class _TextFileViewerPageState extends State<TextFileViewerPage> {
   void initState() {
     super.initState();
     _downloadAndSaveFile(widget.filePath);
+    if (widget.filePath.contains('http') || widget.filePath.contains('https')) {
+      _downloadAndSaveFile(widget.filePath);
+    } else {
+      // Handle local mobile file path
+      setState(() {
+        localFilePath = widget.filePath;
+        isLoading = false;
+      });
+    }
   }
 
   Future<void> _downloadAndSaveFile(String url) async {
