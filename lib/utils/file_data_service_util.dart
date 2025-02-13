@@ -14,6 +14,7 @@ Future<List<FileItemNew>> fetchFileStructure() async {
     mongoWhereClause: null,
     projections: ["Data"],
     allInstance: false,
+    
   );
 
   // 2. Fetch folder instances
