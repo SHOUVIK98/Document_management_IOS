@@ -471,42 +471,62 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: Colors.white,
-      // backgroundColor: Colors.black,
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text("User Profile"),
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: const Icon(CupertinoIcons.back),
-        ),
-        trailing: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => EditProfile(
-                  onThemeChanged: widget.onThemeChanged,
-                  onColorSchemeChanged: widget.onColorSchemeChanged,
-                  colorScheme: widget.colorScheme,
-                  themeMode: widget.themeMode,
-                  name: widget.name,
-                  email: widget.email,
-                  phoneNumber: widget.phoneNumber,
-                  login: widget.login,
-                  onProfileUpdate: showUpdatedProfileDetails,
+    return CupertinoApp(
+      home:  CupertinoPageScaffold(
+        backgroundColor: widget.themeMode == ThemeMode.light
+            ? Colors.white
+            : Colors.black12,  // Lighter black for dark mode background
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(
+            "User Profile",
+            style: TextStyle(color: widget.colorScheme.primary,fontSize: 22),
+          ),
+          leading: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Icon(
+              CupertinoIcons.back,
+              color: widget.themeMode == ThemeMode.light
+                  ? CupertinoColors.black // Light mode icon color
+                  : CupertinoColors.white, // Dark mode icon color
+            ),
+          ),
+          trailing: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => EditProfile(
+                    onThemeChanged: widget.onThemeChanged,
+                    onColorSchemeChanged: widget.onColorSchemeChanged,
+                    colorScheme: widget.colorScheme,
+                    themeMode: widget.themeMode,
+                    name: widget.name,
+                    email: widget.email,
+                    phoneNumber: widget.phoneNumber,
+                    login: widget.login,
+                    onProfileUpdate: showUpdatedProfileDetails,
+                  ),
                 ),
-              ),
-            );
-          },
-          child: const Icon(CupertinoIcons.pencil),
+              );
+            },
+            child: Icon(
+              CupertinoIcons.pencil,
+              color: widget.themeMode == ThemeMode.light
+                  ? CupertinoColors.black // Light mode icon color
+                  : CupertinoColors.white, // Dark mode icon color
+            ),
+          ),
+        ),
+        child: SafeArea(
+          child: _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
         ),
       ),
-      child: SafeArea(
-        child:
-            _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
-      ),
+      // child: SafeArea(
+      //   child:
+      //       _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
+      // ),
     );
+
   }
 
   /// Builds the actual profile content once data is available
@@ -759,9 +779,16 @@ class _ProfileState extends State<Profile> {
   /// Common divider used between list tiles
   Widget _buildDivider() {
     return Container(
-      height: 1,
+      height: 2,
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
-      color: CupertinoColors.separator,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.grey.withOpacity(0.5),
+            Colors.grey.withOpacity(0.1),
+          ],
+        ),
+      ),
     );
   }
 
@@ -881,3 +908,5 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
+
+

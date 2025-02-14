@@ -144,12 +144,12 @@ class OtpPage extends StatelessWidget {
                                 isMandatory: true,
                                 prefixIcon: const Icon(Icons.person_outline),
                                 controller: otpController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Otp';
-                                  }
-                                  return null;
-                                },
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return 'Please enter Otp';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                               const SizedBox(height: 20),
 

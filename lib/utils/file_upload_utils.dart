@@ -49,7 +49,7 @@ List<FileItemNew> processFiles(List<PlatformFile> files, bool isFolderUpload,
     String identifier = uuid.v4();
     final currentDateAndTime = DateTime.now();
     final formattedCurrentDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(currentDateAndTime);
+    DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(currentDateAndTime);
     return FileItemNew(
         name: file.name,
         icon: getFileIcon(file.extension),

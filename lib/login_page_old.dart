@@ -130,12 +130,12 @@ class LoginPage extends StatelessWidget {
                                 isMandatory: true,
                                 prefixIcon: const Icon(Icons.person_outline),
                                 controller: usernameController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Username';
-                                  }
-                                  return null;
-                                },
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return 'Please enter Username';
+                                //   }
+                                //   return null;
+                                // },
                               ),
                               const SizedBox(height: 20),
 
@@ -147,12 +147,12 @@ class LoginPage extends StatelessWidget {
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 inputType: InputType.password,
                                 controller: passwordController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Password';
-                                  }
-                                  return null;
-                                },
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return 'Please enter Password';
+                                //   }
+                                //   return null;
+                                // },
                               ),
 
                               // Forgot Password
