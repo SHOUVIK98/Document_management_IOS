@@ -125,7 +125,6 @@
 //   }
 // }
 
-
 // import 'package:flutter/material.dart';
 // import 'package:document_management_main/components/grid_view.dart';
 // import 'package:document_management_main/components/list_view.dart';
@@ -377,8 +376,6 @@
 //   }
 // }
 
-
-
 // import 'package:flutter/material.dart';
 // import 'package:shimmer/shimmer.dart';
 
@@ -425,80 +422,80 @@
 //   }
 
 //   /// Fetches file/folder data, builds file structure
-  // Future<void> _loadData() async {
-  //   try {
-  //     // Example logic: fetch all needed instances
-  //     final List<Map<String, dynamic>> fileInstanceData =
-  //     await IKonService.iKonService.getMyInstancesV2(
-  //       processName: "File Manager - DM",
-  //       predefinedFilters: {"taskName": "Viewer Access"},
-  //       processVariableFilters: null,
-  //       taskVariableFilters: null,
-  //       mongoWhereClause: null,
-  //       projections: ["Data"],
-  //       allInstance: false,
-  //     );
+// Future<void> _loadData() async {
+//   try {
+//     // Example logic: fetch all needed instances
+//     final List<Map<String, dynamic>> fileInstanceData =
+//     await IKonService.iKonService.getMyInstancesV2(
+//       processName: "File Manager - DM",
+//       predefinedFilters: {"taskName": "Viewer Access"},
+//       processVariableFilters: null,
+//       taskVariableFilters: null,
+//       mongoWhereClause: null,
+//       projections: ["Data"],
+//       allInstance: false,
+//     );
 
-  //     final List<Map<String, dynamic>> folderInstanceData =
-  //     await IKonService.iKonService.getMyInstancesV2(
-  //       processName: "Folder Manager - DM",
-  //       predefinedFilters: {"taskName": "Viewer Access"},
-  //       processVariableFilters: null,
-  //       taskVariableFilters: null,
-  //       mongoWhereClause: null,
-  //       projections: ["Data"],
-  //       allInstance: false,
-  //     );
+//     final List<Map<String, dynamic>> folderInstanceData =
+//     await IKonService.iKonService.getMyInstancesV2(
+//       processName: "Folder Manager - DM",
+//       predefinedFilters: {"taskName": "Viewer Access"},
+//       processVariableFilters: null,
+//       taskVariableFilters: null,
+//       mongoWhereClause: null,
+//       projections: ["Data"],
+//       allInstance: false,
+//     );
 
-  //     final Map<String, dynamic> userData =
-  //     await IKonService.iKonService.getLoggedInUserProfile();
+//     final Map<String, dynamic> userData =
+//     await IKonService.iKonService.getLoggedInUserProfile();
 
-  //     final List<Map<String, dynamic>> starredInstanceData =
-  //     await IKonService.iKonService.getMyInstancesV2(
-  //       processName: "User Specific Folder and File Details - DM",
-  //       predefinedFilters: {"taskName": "View Details"},
-  //       processVariableFilters: {"user_id": userData["USER_ID"]},
-  //       taskVariableFilters: null,
-  //       mongoWhereClause: null,
-  //       projections: ["Data"],
-  //       allInstance: false,
-  //     );
+//     final List<Map<String, dynamic>> starredInstanceData =
+//     await IKonService.iKonService.getMyInstancesV2(
+//       processName: "User Specific Folder and File Details - DM",
+//       predefinedFilters: {"taskName": "View Details"},
+//       processVariableFilters: {"user_id": userData["USER_ID"]},
+//       taskVariableFilters: null,
+//       mongoWhereClause: null,
+//       projections: ["Data"],
+//       allInstance: false,
+//     );
 
-  //     final List<Map<String, dynamic>> trashInstanceData =
-  //     await IKonService.iKonService.getMyInstancesV2(
-  //       processName: "Delete Folder Structure - DM",
-  //       predefinedFilters: {"taskName": "Delete Folder And Files"},
-  //       processVariableFilters: null,
-  //       taskVariableFilters: null,
-  //       mongoWhereClause: null,
-  //       projections: ["Data"],
-  //       allInstance: false,
-  //     );
+//     final List<Map<String, dynamic>> trashInstanceData =
+//     await IKonService.iKonService.getMyInstancesV2(
+//       processName: "Delete Folder Structure - DM",
+//       predefinedFilters: {"taskName": "Delete Folder And Files"},
+//       processVariableFilters: null,
+//       taskVariableFilters: null,
+//       mongoWhereClause: null,
+//       projections: ["Data"],
+//       allInstance: false,
+//     );
 
-  //     // Build the final file structure
-  //     final fileStructure = createFileStructure(
-  //       fileInstanceData,
-  //       folderInstanceData,
-  //       starredInstanceData,
-  //       trashInstanceData,
-  //     );
+//     // Build the final file structure
+//     final fileStructure = createFileStructure(
+//       fileInstanceData,
+//       folderInstanceData,
+//       starredInstanceData,
+//       trashInstanceData,
+//     );
 
-  //     // Update state
-  //     setState(() {
-  //       allItems = fileStructure;
-  //       _isLoading = false;
-  //     });
-  //   } catch (e) {
-  //     // On error, still end loading
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
+//     // Update state
+//     setState(() {
+//       allItems = fileStructure;
+//       _isLoading = false;
+//     });
+//   } catch (e) {
+//     // On error, still end loading
+//     setState(() {
+//       _isLoading = false;
+//     });
 
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Error fetching data: $e')),
-  //     );
-  //   }
-  // }
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('Error fetching data: $e')),
+//     );
+//   }
+// }
 
 //   /// Recursively gathers starred items
 //   List<FileItemNew> _getStarredFiles(List<FileItemNew> items) {
@@ -646,19 +643,7 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
 // IOS LOOK AND FEEL
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // For ColorScheme and other references
@@ -672,14 +657,16 @@ import 'package:document_management_main/apis/ikon_service.dart';
 import 'package:document_management_main/widgets/floating_action_button_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../utils/file_data_service_util.dart';
+
 class StarredFragment extends StatefulWidget {
   final ColorScheme colorScheme;
-  final bool isGridView;
+  // final bool isGridView;
 
   const StarredFragment({
     super.key,
     required this.colorScheme,
-    required this.isGridView,
+    // required this.isGridView,
   });
 
   @override
@@ -689,89 +676,75 @@ class StarredFragment extends StatefulWidget {
 class _StarredFragmentState extends State<StarredFragment> {
   List<FileItemNew> allItems = [];
   bool _isLoading = true;
-  bool localIsGridView = false;
+  // bool localIsGridView = false;
+  late bool isGridView = false;
 
   @override
   void initState() {
     super.initState();
-    localIsGridView = widget.isGridView;
+    // localIsGridView = isGridView;
     _loadData();
   }
 
-    Future<void> _loadData() async {
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
-      // Example logic: fetch all needed instances
-      final List<Map<String, dynamic>> fileInstanceData =
-      await IKonService.iKonService.getMyInstancesV2(
-        processName: "File Manager - DM",
-        predefinedFilters: {"taskName": "Viewer Access"},
-        processVariableFilters: null,
-        taskVariableFilters: null,
-        mongoWhereClause: null,
-        projections: ["Data"],
-        allInstance: false,
-      );
+      final fileStructure = await fetchFileStructure();
+      removeDeletedFilesMine(fileStructure);
+      getItemData(fileStructure);
 
-      final List<Map<String, dynamic>> folderInstanceData =
-      await IKonService.iKonService.getMyInstancesV2(
-        processName: "Folder Manager - DM",
-        predefinedFilters: {"taskName": "Viewer Access"},
-        processVariableFilters: null,
-        taskVariableFilters: null,
-        mongoWhereClause: null,
-        projections: ["Data"],
-        allInstance: false,
-      );
-
-      final Map<String, dynamic> userData =
-      await IKonService.iKonService.getLoggedInUserProfile();
-
-      final List<Map<String, dynamic>> starredInstanceData =
-      await IKonService.iKonService.getMyInstancesV2(
-        processName: "User Specific Folder and File Details - DM",
-        predefinedFilters: {"taskName": "View Details"},
-        processVariableFilters: {"user_id": userData["USER_ID"]},
-        taskVariableFilters: null,
-        mongoWhereClause: null,
-        projections: ["Data"],
-        allInstance: false,
-      );
-
-      final List<Map<String, dynamic>> trashInstanceData =
-      await IKonService.iKonService.getMyInstancesV2(
-        processName: "Delete Folder Structure - DM",
-        predefinedFilters: {"taskName": "Delete Folder And Files"},
-        processVariableFilters: null,
-        taskVariableFilters: null,
-        mongoWhereClause: null,
-        projections: ["Data"],
-        allInstance: false,
-      );
-
-      // Build the final file structure
-      final fileStructure = createFileStructure(
-        fileInstanceData,
-        folderInstanceData,
-        starredInstanceData,
-        trashInstanceData,
-      );
-
-      // Update state
       setState(() {
         allItems = fileStructure;
         _isLoading = false;
       });
     } catch (e) {
-      // On error, still end loading
       setState(() {
         _isLoading = false;
       });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching data: $e')),
-      );
+      _showErrorDialog('Failed to load data: $e');
     }
   }
+
+    /// Reset and refresh data
+  Future<void> _resetData() async {
+    setState(() {
+      _isLoading = true;
+      allItems.clear(); // Clear current items before reloading
+    });
+
+    await _loadData(); // Calls _loadData() to reload data
+  }
+
+  /// Show a Cupertino-style error dialog.
+  void _showErrorDialog(String message) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text("OK"),
+            onPressed: () => Navigator.of(ctx).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Remove any deleted files/folders recursively.
+  void removeDeletedFilesMine(List<FileItemNew> items) {
+    items.removeWhere((item) => item.isDeleted);
+    for (final item in items) {
+      if (item.isFolder && item.children != null) {
+        removeDeletedFilesMine(item.children!);
+      }
+    }
+  }
+
   List<FileItemNew> _getStarredFiles(List<FileItemNew> items) {
     List<FileItemNew> starredFiles = [];
     for (var item in items) {
@@ -806,13 +779,14 @@ class _StarredFragmentState extends State<StarredFragment> {
 
   void _toggleView() {
     setState(() {
-      localIsGridView = !localIsGridView;
+      isGridView = !isGridView;
     });
   }
 
   Widget _buildShimmerPlaceholder() {
     return Shimmer.fromColors(
-      baseColor: CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+      baseColor:
+          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
       highlightColor:
           CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
       child: ListView.builder(
@@ -856,10 +830,34 @@ class _StarredFragmentState extends State<StarredFragment> {
       //     ],
       //   ),
       // ),
+      navigationBar: CupertinoNavigationBar(
+        // If you want a title for each tab's top bar:
+        leading: CupertinoButton(
+          onPressed: _resetData,
+          child: const Icon(CupertinoIcons.refresh),
+        ),
+        middle: Text(
+          // ['Home', 'Shared', 'Starred'][index],
+          "Starred",
+          style: TextStyle(
+            color: widget.colorScheme.primary,
+          ),
+        ),
+        trailing: CupertinoButton(
+          onPressed: _toggleView,
+          padding: EdgeInsets.zero,
+          child: Icon(
+            isGridView
+                ? CupertinoIcons.list_bullet
+                : CupertinoIcons.square_grid_2x2,
+            color: widget.colorScheme.primary,
+          ),
+        ),
+      ),
       child: SafeArea(
         child: Stack(
           children: [
-            if (starredItems.isNotEmpty)
+            // if (starredItems.isNotEmpty)
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.end,
               //   children: [
@@ -873,28 +871,30 @@ class _StarredFragmentState extends State<StarredFragment> {
               //     const SizedBox(width: 28.0),
               //   ],
               // ),
-            Expanded(
-              child: _isLoading
-                  ? _buildShimmerPlaceholder()
-                  : starredItems.isEmpty
-                      ? const Center(
-                          child: Text("No starred items"),
-                        )
-                      : widget.isGridView
-                          ? GridLayout(
-                              items: starredItems,
-                              onStarred: _addToStarred,
-                              colorScheme: widget.colorScheme,
-                              renameFolder: _renameFolder,
-                            )
-                          : CustomListView(
-                              items: starredItems,
-                              onStarred: _addToStarred,
-                              colorScheme: widget.colorScheme,
-                              renameFolder: _renameFolder,
-                            ),
-            ),
-            Positioned(right: 16,bottom: 16,
+              Expanded(
+                child: _isLoading
+                    ? _buildShimmerPlaceholder()
+                    : starredItems.isEmpty
+                        ? const Center(
+                            child: Text("No starred items"),
+                          )
+                        : isGridView
+                            ? GridLayout(
+                                items: starredItems,
+                                onStarred: _addToStarred,
+                                colorScheme: widget.colorScheme,
+                                renameFolder: _renameFolder,
+                              )
+                            : CustomListView(
+                                items: starredItems,
+                                onStarred: _addToStarred,
+                                colorScheme: widget.colorScheme,
+                                renameFolder: _renameFolder,
+                              ),
+              ),
+            Positioned(
+                right: 16,
+                bottom: 16,
                 child: FloatingActionButtonWidget(
                     folderName: "",
                     onFilesAdded: _onFilesAdded,
@@ -905,6 +905,7 @@ class _StarredFragmentState extends State<StarredFragment> {
       ),
     );
   }
+
   // Example method for renaming a folder (can be replaced with actual functionality)
   Future<void> _renameFolder(String newName, FileItemNew? item) async {
     setState(() {

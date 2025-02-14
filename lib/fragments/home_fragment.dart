@@ -207,18 +207,7 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
 // IOS LOOK AND FEEL CODE
-
-
 
 // import 'dart:async';
 // import 'package:flutter/cupertino.dart';
@@ -497,7 +486,6 @@
 //   }
 // }
 
-
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -520,7 +508,7 @@ class HomeFragment extends StatefulWidget {
   final ThemeMode themeMode;
   final void Function(bool isDark) updateTheme;
   final void Function(ColorScheme newScheme) updateColorScheme;
-  final bool isGridView;
+  // final bool isGridView;
 
   const HomeFragment({
     super.key,
@@ -529,7 +517,7 @@ class HomeFragment extends StatefulWidget {
     required this.themeMode,
     required this.updateTheme,
     required this.updateColorScheme,
-    required this.isGridView,
+    // required this.isGridView,
   });
 
   @override
@@ -539,11 +527,18 @@ class HomeFragment extends StatefulWidget {
 class _HomeFragmentState extends State<HomeFragment> {
   List<FileItemNew> currentItems = [];
   bool _isLoading = true;
+  late bool isGridView = false;
 
   @override
   void initState() {
     super.initState();
     _loadData();
+  }
+
+  void _toggleViewMode() {
+    setState(() {
+      isGridView = !isGridView;
+    });
   }
 
   /// Fetch data and remove any deleted files.
@@ -555,7 +550,7 @@ class _HomeFragmentState extends State<HomeFragment> {
     try {
       final fileStructure = await fetchFileStructure();
       removeDeletedFilesMine(fileStructure);
-      getItemDataNew(fileStructure);
+      getItemData(fileStructure);
 
       setState(() {
         currentItems = fileStructure;
@@ -650,23 +645,35 @@ class _HomeFragmentState extends State<HomeFragment> {
     _resetData(); // Call reset after deletion
   }
 
+  void _pasteItem() {
+    _resetData();
+  }
+
+  void _refreshDataAfterPaste() {
+    _resetData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Widget currentView = widget.isGridView
+    final Widget currentView = isGridView
         ? GridLayout(
-      items: currentItems,
-      onStarred: _addToStarred,
-      colorScheme: widget.colorScheme,
-      renameFolder: _renameFolder,
-      deleteItem: _deleteFileOrFolder,
-    )
+            items: currentItems,
+            onStarred: _addToStarred,
+            colorScheme: widget.colorScheme,
+            renameFolder: _renameFolder,
+            deleteItem: _deleteFileOrFolder,
+            pasteFileOrFolder: _pasteItem,
+            homeRefreshData: _refreshDataAfterPaste,
+          )
         : CustomListView(
-      items: currentItems,
-      onStarred: _addToStarred,
-      colorScheme: widget.colorScheme,
-      renameFolder: _renameFolder,
-      deleteItem: _deleteFileOrFolder,
-    );
+            items: currentItems,
+            onStarred: _addToStarred,
+            colorScheme: widget.colorScheme,
+            renameFolder: _renameFolder,
+            deleteItem: _deleteFileOrFolder,
+            pasteFileOrFolder: _pasteItem,
+            homeRefreshData: _refreshDataAfterPaste,
+          );
 
     final Widget content = _isLoading
         ? _buildShimmerPlaceholder()
@@ -674,10 +681,27 @@ class _HomeFragmentState extends State<HomeFragment> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-         middle: const Text("Home"),
-        trailing: GestureDetector(
-          onTap: _resetData, // Reset button works now!
-          child: const Icon(CupertinoIcons.refresh_bold),
+        // If you want a title for each tab's top bar:
+        leading: CupertinoButton(
+          child: Icon(CupertinoIcons.refresh),
+          onPressed: _resetData,
+        ),
+        middle: Text(
+          // ['Home', 'Shared', 'Starred'][index],
+          "Home",
+          style: TextStyle(
+            color: widget.colorScheme.primary,
+          ),
+        ),
+        trailing: CupertinoButton(
+          onPressed: _toggleViewMode,
+          padding: EdgeInsets.zero,
+          child: Icon(
+            isGridView
+                ? CupertinoIcons.list_bullet
+                : CupertinoIcons.square_grid_2x2,
+            color: widget.colorScheme.primary,
+          ),
         ),
       ),
       child: SafeArea(
@@ -703,9 +727,10 @@ class _HomeFragmentState extends State<HomeFragment> {
   /// Shimmer placeholder while loading
   Widget _buildShimmerPlaceholder() {
     return Shimmer.fromColors(
-      baseColor: CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+      baseColor:
+          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
       highlightColor:
-      CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
+          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
       child: ListView.builder(
         itemCount: 8,
         itemBuilder: (context, index) {
