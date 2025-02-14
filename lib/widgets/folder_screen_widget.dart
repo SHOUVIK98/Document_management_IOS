@@ -317,20 +317,7 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // IOS LOOK AND FEEL CODE:
-
 
 import 'package:document_management_main/utils/file_data_service_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -351,15 +338,19 @@ class FolderScreenWidget extends StatefulWidget {
   final String folderName;
   final dynamic parentId;
   final bool isTrashed;
+  final String folderId;
   final ColorScheme colorScheme;
+  final Function? homeRefreshData;
 
   const FolderScreenWidget({
     super.key,
     required this.fileItems,
     required this.folderName,
     required this.colorScheme,
-    this.isTrashed = false,
+    this.isTrashed = false, 
+    required this.folderId,
     this.parentId,
+    this.homeRefreshData,
   });
 
   @override
@@ -410,17 +401,44 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
   }
 
   Future<void> _refreshData() async {
+    // try {
+    //   // Fetch data and update the file structure (same as before)
+    //   final fileStructure = await fetchFileStructure();
+
+    //   setState(() {
+    //     removeDeletedFiles(widget.fileItems);
+    //     currentItems = widget.fileItems;
+    //   });
+    // } catch (e) {
+    //   print("Error during refresh: $e");
+    //   // Optionally show a Cupertino-style alert dialog or other message
+    // }
+
     try {
-      // Fetch data and update the file structure (same as before)
+      // Fetch file instances
       final fileStructure = await fetchFileStructure();
 
+      // Update the state with the new file structure
       setState(() {
-        removeDeletedFiles(widget.fileItems);
-        currentItems = widget.fileItems;
+        // allActiveItems = [];
+        FileItemNew fileItem = fileStructure
+            .firstWhere((item) => item.identifier == widget.folderId);
+        List<FileItemNew> fileItems = fileItem.children!;
+        removeDeletedFiles(fileItems);
+        currentItems = fileItems;
+
+        // removeDeletedFiles(widget.fileItems);
+        // currentItems = widget.fileItems;
+        // currentItems = fileStructure;
       });
     } catch (e) {
+      // Handle any errors here
       print("Error during refresh: $e");
-      // Optionally show a Cupertino-style alert dialog or other message
+      // Optionally, show a snackbar or dialog to inform the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Failed to refresh data. Please try again.')),
+      );
     }
   }
 
@@ -454,7 +472,12 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
       filteredFiles = filteredFiles;
     });
   }
-  
+
+  void pasteItem() {
+    _refreshData();
+    widget.homeRefreshData!();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -492,18 +515,23 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
           child: Column(
             children: [
               if (currentItems.isNotEmpty)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: Icon(localIsGridView
-                          ? CupertinoIcons.list_bullet
-                          : CupertinoIcons.square_grid_2x2),
-                      onPressed: _toggleViewMode,
-                    ),
-                    const SizedBox(width: 28.0),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: _toggleViewMode,
+                        child: Icon(
+                          localIsGridView
+                              ? CupertinoIcons.list_bullet
+                              : CupertinoIcons.square_grid_2x2,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ),
                 ),
               Expanded(
                 child: localIsGridView
@@ -515,6 +543,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                         renameFolder: _renameFolder,
                         deleteItem: _deleteFileOrFolder,
                         isTrashed: widget.isTrashed,
+                        pasteFileOrFolder: pasteItem,
                       )
                     : CustomListView(
                         items: currentItems,
@@ -524,7 +553,18 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                         renameFolder: _renameFolder,
                         deleteItem: _deleteFileOrFolder,
                         isTrashed: widget.isTrashed,
+                        pasteFileOrFolder: pasteItem,
                       ),
+              ),
+              Positioned(
+                right: 16,
+                bottom: 16,
+                child: FloatingActionButtonWidget(
+                  onFilesAdded: _onFilesAdded,
+                  isFolderUpload: false,
+                  folderName: "",
+                  colorScheme: widget.colorScheme,
+                ),
               ),
             ],
           ),

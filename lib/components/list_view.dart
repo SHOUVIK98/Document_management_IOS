@@ -24,7 +24,6 @@
 //   Widget build(BuildContext context) {
 //     final isLight = Theme.of(context).brightness == Brightness.light;
 
-
 //     // print("islight $isLight");
 //     return ListView.builder(
 //         padding: const EdgeInsets.all(8),
@@ -70,11 +69,11 @@
 //                       const begin = Offset(1.0, 0.0); // Start from the right
 //                       const end = Offset.zero; // End at the original position
 //                       const curve = Curves.easeInOut;
-            
+
 //                       var tween = Tween(begin: begin, end: end)
 //                           .chain(CurveTween(curve: curve));
 //                       var offsetAnimation = animation.drive(tween);
-            
+
 //                       return SlideTransition(
 //                           position: offsetAnimation, child: child);
 //                     },
@@ -178,22 +177,17 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-// IOS CODE 
+// IOS CODE
 import 'package:document_management_main/utils/show_bottom_modal_options_util.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' 
-    show ColorScheme, Curves, Offset, PageRouteBuilder, Theme, showModalBottomSheet; // We might keep this if the bottom sheet is still material-based
+import 'package:flutter/material.dart'
+    show
+        ColorScheme,
+        Curves,
+        Offset,
+        PageRouteBuilder,
+        Theme,
+        showModalBottomSheet; // We might keep this if the bottom sheet is still material-based
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../data/create_fileStructure.dart';
@@ -212,6 +206,8 @@ class CustomListView extends StatelessWidget {
   final Function(FileItemNew item, dynamic parentFolderId)? deleteItem;
   final bool isTrashed;
   final dynamic parentFolderId;
+  final Function? pasteFileOrFolder;
+  final Function? homeRefreshData;
 
   const CustomListView({
     super.key,
@@ -222,6 +218,8 @@ class CustomListView extends StatelessWidget {
     this.deleteItem,
     this.isTrashed = false,
     this.parentFolderId,
+    this.pasteFileOrFolder,
+    this.homeRefreshData,
   });
 
   @override
@@ -247,7 +245,16 @@ class CustomListView extends StatelessWidget {
             // Remove default padding for a more "list-like" feel:
             padding: EdgeInsets.zero,
             onPressed: () => _handleItemTap(context, item),
-            onLongPress: ()=>  showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId),
+            onLongPress: () => showOptions(
+                context,
+                item,
+                onStarred,
+                renameFolder,
+                deleteItem,
+                isTrashed,
+                parentFolderId,
+                pasteFileOrFolder,
+                homeRefreshData),
             child: Row(
               children: [
                 // Leading icon
@@ -324,24 +331,28 @@ class CustomListView extends StatelessWidget {
         PageRouteBuilder(
           // For an iOS-like transition, you could use CupertinoPageRoute,
           // but we'll keep a custom SlideTransition for demonstration:
-          pageBuilder: (context, animation, secondaryAnimation) => FolderScreenWidget(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              FolderScreenWidget(
             fileItems: item.children ?? [],
             folderName: item.name,
             colorScheme: colorScheme,
             parentId: item.identifier,
             isTrashed: isTrashed,
+            folderId: item.identifier,
+            homeRefreshData: homeRefreshData,
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0.0); // Start offscreen to the right
             const end = Offset.zero;
             const curve = Curves.easeInOut;
-            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            final tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             final offsetAnimation = animation.drive(tween);
             return SlideTransition(position: offsetAnimation, child: child);
           },
         ),
       );
-    } 
+    }
     // If it’s a file, open the correct viewer
     else if (item.filePath != null) {
       final path = item.filePath!.toLowerCase();

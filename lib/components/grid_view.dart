@@ -19,6 +19,8 @@ class GridLayout extends StatelessWidget {
   final Function(FileItemNew item, dynamic parentFolderId)? deleteItem;
   final bool isTrashed;
   final dynamic parentFolderId;
+  final Function? pasteFileOrFolder;
+  final Function? homeRefreshData;
 
   // final bool isLightTheme;
   /*
@@ -36,7 +38,9 @@ class GridLayout extends StatelessWidget {
       this.renameFolder,
       this.deleteItem,
       this.isTrashed = false,
-      this.parentFolderId});
+      this.parentFolderId, 
+      this.pasteFileOrFolder, 
+      this.homeRefreshData});
 
   // @override
   // Widget build(BuildContext context) {
@@ -92,7 +96,7 @@ class GridLayout extends StatelessWidget {
 
     return GestureDetector(
       onLongPress: (){
-        showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId);
+        showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId,pasteFileOrFolder,homeRefreshData);
       },
       onTap: () {
         String fileName = item.name;
@@ -106,7 +110,10 @@ class GridLayout extends StatelessWidget {
               folderName: item.name,
               colorScheme: colorScheme,
               parentId: item.identifier,
+              folderId: item.identifier,
               isTrashed: isTrashed ? true : false,
+              homeRefreshData:homeRefreshData,
+
               // isLightTheme: isLightTheme,
             ),
             transitionsBuilder:
@@ -229,7 +236,8 @@ class GridLayout extends StatelessWidget {
                               renameFolder: renameFolder,
                               deleteItem: deleteItem,
                               isTrashed: isTrashed,
-                              parentFolderId: parentFolderId);
+                              parentFolderId: parentFolderId,
+                              pasteFileOrFolder: pasteFileOrFolder,);
                     },
                   );
                 },

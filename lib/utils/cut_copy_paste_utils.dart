@@ -72,7 +72,7 @@ void removeCutItems(items) {
   }
 }
 
-void pasteDocument(String destinationIdentifier, BuildContext context,
+Future<void> pasteDocument(String destinationIdentifier, BuildContext context,
     {FileItemNew? destinationItem}) async {
   // if (cutOrCopiedItem != null) {
   //   allActiveItems = [];

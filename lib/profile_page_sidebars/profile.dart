@@ -370,9 +370,6 @@
 // }
 //
 
-
-//original code
-
 import 'package:document_management_main/apis/ikon_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -428,7 +425,7 @@ class _ProfileState extends State<Profile> {
     try {
       userData = await IKonService.iKonService.getLoggedInUserProfile();
       userDataDetails =
-      await IKonService.iKonService.getLoggedInUserProfileDetails();
+          await IKonService.iKonService.getLoggedInUserProfileDetails();
 
       setState(() {
         widget.name = userDataDetails?['USER_NAME'];
@@ -461,10 +458,10 @@ class _ProfileState extends State<Profile> {
 
   /// Callback to update the profile after editing
   void showUpdatedProfileDetails(
-      String name,
-      String email,
-      String phoneNumber,
-      ) {
+    String name,
+    String email,
+    String phoneNumber,
+  ) {
     setState(() {
       widget.name = name;
       widget.email = email;
@@ -524,110 +521,208 @@ class _ProfileState extends State<Profile> {
           child: _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
         ),
       ),
+      // child: SafeArea(
+      //   child:
+      //       _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
+      // ),
     );
 
   }
 
   /// Builds the actual profile content once data is available
+  // Widget _buildProfileContent() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     children: [
+  //       // Header with background and avatar
+  //       Stack(
+  //         children: [
+  //           Container(
+  //             height: 180,
+  //             decoration: BoxDecoration(
+  //               gradient: LinearGradient(
+  //                 begin: Alignment.topCenter,
+  //                 end: Alignment.bottomCenter,
+  //                 colors: [
+  //                   Colors.white, // Start with white at the top
+  //                   widget.colorScheme.primary, // Blend into primary color at the bottom
+  //                 ],
+  //               ),
+  //               borderRadius: const BorderRadius.vertical(
+  //                 bottom: Radius.circular(30), // Keeps the rounded bottom corners
+  //               ),
+  //             ),
+
+  //           ),
+  //           Align(
+  //             alignment: Alignment.center,
+  //             child: Column(
+  //               children: [
+  //                 const SizedBox(height: 80),
+  //                 const CircleAvatar(
+  //                   radius: 70,
+  //                   backgroundImage:
+  //                   AssetImage('assets/profile_picture.png'),
+  //                 ),
+  //                 const SizedBox(height: 10),
+  //                 Text(
+  //                   widget.name ?? '',
+  //                   style: const TextStyle(
+  //                     fontSize: 20,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //                 const Text(
+  //                   'Software Engineer Level 1',
+  //                   style: TextStyle(
+  //                     fontSize: 16,
+  //                     color: CupertinoColors.systemGrey,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 20),
+  //       Expanded(
+  //         child: ListView(
+  //           children: [
+  //             _buildProfileTile(
+  //               title: 'User Login',
+  //               subtitle: widget.login,
+  //               icon: CupertinoIcons.person,
+  //             ),
+  //             _buildDivider(),
+  //             _buildProfileTile(
+  //               title: 'Date of Birth',
+  //               subtitle: 'dd-mm-yyyy',
+  //               icon: CupertinoIcons.calendar,
+  //             ),
+  //             _buildDivider(),
+  //             _buildProfileTile(
+  //               title: 'Phone Number',
+  //               subtitle: widget.phoneNumber,
+  //               icon: CupertinoIcons.phone,
+  //             ),
+  //             _buildDivider(),
+  //             _buildProfileTile(
+  //               title: 'Email',
+  //               subtitle: widget.email,
+  //               icon: CupertinoIcons.mail,
+  //             ),
+  //             _buildDivider(),
+  //             _buildProfileTile(
+  //               title: 'About us',
+  //               subtitle: 'Know more about our team and goal',
+  //               icon: CupertinoIcons.info,
+  //               onTap: () {
+  //                 // Handle navigation
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
   Widget _buildProfileContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Header with background and avatar
-        Stack(
-          children: [
-            Container(
-              height: 180,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                   widget.themeMode == ThemeMode.light
-                        ? CupertinoColors.white // Light mode icon color
-                        : CupertinoColors.black, // Dark mode icon color
-                    widget.colorScheme.primary, // Blend into primary color at the bottom
-                  ],
-                ),
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(30), // Keeps the rounded bottom corners
+    return CupertinoPageScaffold(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Header with background and avatar
+          Stack(
+            children: [
+              Container(
+                height: 180,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      CupertinoColors.white,
+                      widget.colorScheme.primary,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(30),
+                  ),
                 ),
               ),
-
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Column(
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    SizedBox(height: 80),
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage('assets/profile_picture.png'),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      widget.name ?? '',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: CupertinoColors.black,
+                      ),
+                    ),
+                    Text(
+                      'Software Engineer Level 1',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: CupertinoScrollbar(
+              child: ListView(
                 children: [
-                  const SizedBox(height: 80),
-                  const CircleAvatar(
-                    radius: 70,
-                    backgroundImage:
-                    AssetImage('assets/profile_picture.png'),
+                  _buildProfileTile(
+                    title: 'User Login',
+                    subtitle: widget.login,
+                    icon: CupertinoIcons.person,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    widget.name ?? '',
-                    style:  TextStyle(
-                      color:  widget.themeMode == ThemeMode.light
-                          ? CupertinoColors.black // Light mode icon color
-                          : CupertinoColors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  _buildDivider(),
+                  _buildProfileTile(
+                    title: 'Date of Birth',
+                    subtitle: 'dd-mm-yyyy',
+                    icon: CupertinoIcons.calendar,
                   ),
-                  const Text(
-                    'Software Engineer Level 1',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: CupertinoColors.systemGrey,
-                    ),
+                  _buildDivider(),
+                  _buildProfileTile(
+                    title: 'Phone Number',
+                    subtitle: widget.phoneNumber,
+                    icon: CupertinoIcons.phone,
+                  ),
+                  _buildDivider(),
+                  _buildProfileTile(
+                    title: 'Email',
+                    subtitle: widget.email,
+                    icon: CupertinoIcons.mail,
+                  ),
+                  _buildDivider(),
+                  _buildProfileTile(
+                    title: 'About us',
+                    subtitle: 'Know more about our team and goal',
+                    icon: CupertinoIcons.info,
+                    onTap: () {
+                      // Handle navigation
+                    },
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Expanded(
-          child: ListView(
-            children: [
-              _buildProfileTile(
-                title: 'User Login',
-                subtitle: widget.login,
-                icon: CupertinoIcons.person,
-              ),
-              _buildDivider(),
-              _buildProfileTile(
-                title: 'Date of Birth',
-                subtitle: 'dd-mm-yyyy',
-                icon: CupertinoIcons.calendar,
-              ),
-              _buildDivider(),
-              _buildProfileTile(
-                title: 'Phone Number',
-                subtitle: widget.phoneNumber,
-                icon: CupertinoIcons.phone,
-              ),
-              _buildDivider(),
-              _buildProfileTile(
-                title: 'Email',
-                subtitle: widget.email,
-                icon: CupertinoIcons.mail,
-              ),
-              _buildDivider(),
-              _buildProfileTile(
-                title: 'About us',
-                subtitle: 'Know more about our team and goal',
-                icon: CupertinoIcons.info,
-                onTap: () {
-                  // Handle navigation
-                },
-              ),
-            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -641,8 +736,7 @@ class _ProfileState extends State<Profile> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: Row(
           children: [
             Expanded(
@@ -778,8 +872,7 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Expanded(
                             child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   width: 80,

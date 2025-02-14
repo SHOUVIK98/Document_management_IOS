@@ -10,7 +10,9 @@ void showOptions(
     final Function(String, FileItemNew item)? renameFolder,
     final Function(FileItemNew item, dynamic parentFolderId)? deleteItem,
     final bool isTrashed,
-    final dynamic parentFolderId) {
+    final dynamic parentFolderId,
+    final Function? pasteFileOrFolder,
+    final Function? homeRefreshData) {
   showCupertinoModalPopup(
     context: context,
     builder: (BuildContext ctx) {
@@ -24,6 +26,7 @@ void showOptions(
         deleteItem: deleteItem,
         isTrashed: isTrashed,
         parentFolderId: parentFolderId,
+        pasteFileOrFolder: pasteFileOrFolder,
       );
     },
   );

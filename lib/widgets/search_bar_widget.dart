@@ -271,6 +271,7 @@ class SearchPageState extends State<SearchPage> {
               fileItems: item.children ?? [],
               folderName: item.name,
               colorScheme: Theme.of(context).colorScheme,
+              folderId: item.identifier,
             );
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

@@ -6,11 +6,11 @@ import '../widgets/floating_action_button_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 class SharedFragment extends StatefulWidget {
-  final bool isGridView;
+  // final bool isGridView;
   final ColorScheme colorScheme;
 
   const SharedFragment({
-    required this.isGridView,
+    // required this.isGridView,
     required this.colorScheme,
     super.key,
   });
@@ -20,6 +20,7 @@ class SharedFragment extends StatefulWidget {
 }
 
 class _SharedFragmentState extends State<SharedFragment> {
+  late bool isGridView = false;
   // If you maintain a list of files elsewhere, ensure it is defined accordingly.
   // For demonstration, we assume 'allItems' is maintained somewhere in your app.
   // (If needed, you can declare a local list here.)
@@ -32,11 +33,39 @@ class _SharedFragmentState extends State<SharedFragment> {
     });
   }
 
+  
+  void _toggleViewMode() {
+    setState(() {
+      isGridView = !isGridView;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text("Shared"),
+      navigationBar: CupertinoNavigationBar(
+        // If you want a title for each tab's top bar:
+        leading: CupertinoButton(
+          child: Icon(CupertinoIcons.refresh),
+          onPressed: (){},
+        ),
+        middle: Text(
+          // ['Home', 'Shared', 'Starred'][index],
+          "Shared",
+          style: TextStyle(
+            color: widget.colorScheme.primary,
+          ),
+        ),
+        trailing: CupertinoButton(
+          onPressed: _toggleViewMode,
+          padding: EdgeInsets.zero,
+          child: Icon(
+            isGridView
+                ? CupertinoIcons.list_bullet
+                : CupertinoIcons.square_grid_2x2,
+            color: widget.colorScheme.primary,
+          ),
+        ),
       ),
       child: SafeArea(
         child: Stack(

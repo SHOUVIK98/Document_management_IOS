@@ -20,7 +20,7 @@ class BottomNavigation extends StatefulWidget {
     required this.themeMode,
     required this.updateTheme,
     required this.updateColorScheme,
-    required this.colorScheme, 
+    required this.colorScheme,
   });
 
   @override
@@ -101,45 +101,59 @@ class _BottomNavigationState extends State<BottomNavigation> {
             themeMode: widget.themeMode,
             updateTheme: widget.updateTheme,
             updateColorScheme: widget.updateColorScheme,
-            isGridView: isGridView,
+            // isGridView: isGridView,
           ),
           SharedFragment(
-            isGridView: isGridView,
+            // isGridView: isGridView,
             colorScheme: widget.colorScheme,
           ),
           StarredFragment(
             colorScheme: widget.colorScheme,
-            isGridView: isGridView,
+            // isGridView: isGridView,
           ),
         ];
 
         return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            // If you want a title for each tab's top bar:
-            middle: Text(
-              ['Home', 'Shared', 'Starred'][index],
-              style: TextStyle(
-                color: widget.colorScheme.primary,
-              ),
-            ),
-          ),
+          // navigationBar: CupertinoNavigationBar(
+          //   // If you want a title for each tab's top bar:
+          //   leading: CupertinoButton(
+          //     child: Icon(CupertinoIcons.refresh),
+          //     onPressed: (){},
+          //   ),
+          //   middle: Text(
+          //     ['Home', 'Shared', 'Starred'][index],
+          //     style: TextStyle(
+          //       color: widget.colorScheme.primary,
+          //     ),
+          //   ),
+          //   trailing: CupertinoButton(
+          //     onPressed: _toggleViewMode,
+          //     padding: EdgeInsets.zero,
+          //     child: Icon(
+          //       isGridView
+          //           ? CupertinoIcons.list_bullet
+          //           : CupertinoIcons.square_grid_2x2,
+          //       color: widget.colorScheme.primary,
+          //     ),
+          //   ),
+          // ),
           child: SafeArea(
             child: Column(
               children: [
                 // The toggle button row
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    CupertinoButton(
-                      onPressed: _toggleViewMode,
-                      padding: EdgeInsets.zero,
-                      child: Icon(
-                        isGridView
-                            ? CupertinoIcons.list_bullet
-                            : CupertinoIcons.square_grid_2x2,
-                        color: widget.colorScheme.primary,
-                      ),
-                    ),
+                    // CupertinoButton(
+                    //   onPressed: _toggleViewMode,
+                    //   padding: EdgeInsets.zero,
+                    //   child: Icon(
+                    //     isGridView
+                    //         ? CupertinoIcons.list_bullet
+                    //         : CupertinoIcons.square_grid_2x2,
+                    //     color: widget.colorScheme.primary,
+                    //   ),
+                    // ),
                     // const SizedBox(width: 16),
                   ],
                 ),

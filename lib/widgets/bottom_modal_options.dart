@@ -1,5 +1,6 @@
 // IOS LOOK AND FEEL CODE:
 
+import 'package:document_management_main/widgets/details_activity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:document_management_main/data/file_class.dart';
@@ -17,6 +18,7 @@ class BottomModalOptions extends StatelessWidget {
   final Function(FileItemNew item, dynamic parentFolderId)? deleteItem;
   final bool? isTrashed;
   final dynamic parentFolderId;
+  final Function? pasteFileOrFolder;
 
   const BottomModalOptions(
     this.itemData, {
@@ -26,6 +28,7 @@ class BottomModalOptions extends StatelessWidget {
     this.deleteItem,
     this.isTrashed,
     this.parentFolderId,
+    this.pasteFileOrFolder,
   });
 
   @override
@@ -122,13 +125,14 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context); // Close the modal
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "cut";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
-              pasteDocument("home", context);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
+              await pasteDocument("home", context);
+              pasteFileOrFolder!();
             },
             child: const Row(
               children: [
@@ -145,12 +149,12 @@ class BottomModalOptions extends StatelessWidget {
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-             // Navigator.pop(context); // Close the modal
-             Navigator.of(context).pop();
+              // Navigator.pop(context); // Close the modal
+              Navigator.of(context).pop();
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "cut";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
             },
             child: const Row(
               children: [
@@ -171,7 +175,7 @@ class BottomModalOptions extends StatelessWidget {
               bool isFolder = itemData.isFolder;
               String cutOrCopied = "copy";
               String identifier = itemData.identifier;
-              _cutOrCopyDocument(isFolder, cutOrCopied, identifier);
+              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
             },
             child: const Row(
               children: [
@@ -187,15 +191,16 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           CupertinoActionSheetAction(
-            onPressed: () {
-             Navigator.pop(context); // Close the modal
+            onPressed: () async {
+              Navigator.pop(context); // Close the modal
               if (itemData.isFolder) {
                 String destinationIdentifier = itemData.identifier;
-                pasteDocument(
+                await pasteDocument(
                   destinationItem: itemData,
                   destinationIdentifier,
                   context,
                 );
+                pasteFileOrFolder!();
               }
               print("Paste option selected");
             },
@@ -217,8 +222,8 @@ class BottomModalOptions extends StatelessWidget {
               if (onStarred != null) {
                 onStarred!(itemData);
               }
-             // Navigator.pop(context); // Close the modal
-             Navigator.of(context).pop();
+              // Navigator.pop(context); // Close the modal
+              Navigator.of(context).pop();
               print("Add/Remove Starred option selected");
             },
             child: Row(
@@ -230,7 +235,9 @@ class BottomModalOptions extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(itemData.isStarred ? "Remove from Starred" : "Add to Starred"),
+                Text(itemData.isStarred
+                    ? "Remove from Starred"
+                    : "Add to Starred"),
               ],
             ),
           ),
@@ -250,6 +257,37 @@ class BottomModalOptions extends StatelessWidget {
                   width: 10,
                 ),
                 Text("Move to Trash")
+              ],
+            ),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context); // Close the modal
+              // deleteItem!(itemData, parentFolderId);
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) {
+                  return ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(20)), // Adjust radius as needed
+                    child: DetailsActivity(item: itemData),
+                  );
+                },
+              );
+
+              // DetailsActivity(item: itemData,);
+              print("Show Details and Activity of file or folder");
+            },
+            child: const Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                ),
+                Icon(CupertinoIcons.info_circle),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Details & Activity")
               ],
             ),
           ),
