@@ -17,7 +17,7 @@ Future<List<FileItemNew>> fetchFileStructure() async {
     
   );
 
-  // 2. Fetch folder instances
+  /// 2. Fetch folder instances
   final List<Map<String, dynamic>> folderInstanceData =
   await IKonService.iKonService.getMyInstancesV2(
     processName: "Folder Manager - DM",
