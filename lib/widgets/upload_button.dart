@@ -42,6 +42,7 @@
 // }
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class UploadButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -49,11 +50,11 @@ class UploadButton extends StatelessWidget {
   final String label;
 
   const UploadButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.icon,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,7 @@ class UploadButton extends StatelessWidget {
           child: Container(
             width: 60,
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: CupertinoColors.systemGrey5, // Matches iOS style
             ),
@@ -75,9 +76,11 @@ class UploadButton extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
             color: CupertinoColors.label,
+            decoration: TextDecoration.none, // Fixes yellow underline
+            decorationColor: Colors.transparent,
           ),
         ),
         const SizedBox(height: 16),

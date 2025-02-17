@@ -210,6 +210,7 @@ class _UploadWidgetState extends State<UploadWidget> {
           },
           icon: Icons.upload_file,
           label: 'Upload File(s)',
+
         ),
         const SizedBox(width: 15),
         UploadButton(
@@ -229,4 +230,5 @@ class _UploadWidgetState extends State<UploadWidget> {
       ],
     );
   }
+
 }
