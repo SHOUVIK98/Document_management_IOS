@@ -193,14 +193,6 @@ class _DocumentManagementEntryPointState
     final brightness = _isDarkMode ? Brightness.dark : Brightness.light;
 
     return CupertinoApp(
-      // localizationsDelegates: [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate, // Add this
-      // ],
-      // supportedLocales: [
-      //   Locale('en', 'US'), // Add supported locales
-      // ],
       debugShowCheckedModeBanner: false,
       title: 'Document Management',
       // Apply some Cupertino theming based on our colorScheme:
@@ -240,24 +232,26 @@ class _DocumentManagementEntryPointState
                 // ),
               ],
             ),
+            /*USE HOY NAAAAA*/
             trailing: const Row(mainAxisSize: MainAxisSize.min, children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                child: SearchBarWidget(),
+                // child: SearchBarWidget(),
               ),
-            ])),
+            ]
+            /*BUT ROYECHE, KARON AMAR ICHE TAI*/
+            )),
         child: SafeArea(
           child: FileSearchScreen(
-            setFilteredData: setFilteredData,
-            child: BottomNavigation(
-              colorScheme: _colorScheme,
-              themeMode: themeMode,
+          setFilteredData: setFilteredData,
+          child: BottomNavigation(
               isDarkMode: _isDarkMode,
+              themeMode: themeMode,
               updateTheme: _updateTheme,
               updateColorScheme: _updateColorScheme,
-            ),
+              colorScheme: _colorScheme
           ),
-        ),
+        )),
       ),
     );
   }
