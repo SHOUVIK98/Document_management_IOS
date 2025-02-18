@@ -629,7 +629,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  /// Builds a single iOS-styled profile tile
+  //// Builds a single iOS-styled profile tile
   Widget _buildProfileTile({
     required String title,
     required String? subtitle,
