@@ -193,14 +193,6 @@ class _DocumentManagementEntryPointState
     final brightness = _isDarkMode ? Brightness.dark : Brightness.light;
 
     return CupertinoApp(
-      // localizationsDelegates: [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate, // Add this
-      // ],
-      // supportedLocales: [
-      //   Locale('en', 'US'), // Add supported locales
-      // ],
       debugShowCheckedModeBanner: false,
       title: 'Document Management',
       // Apply some Cupertino theming based on our colorScheme:
@@ -252,16 +244,15 @@ class _DocumentManagementEntryPointState
         ),
         child: SafeArea(
           child: FileSearchScreen(
-            setFilteredData: setFilteredData,
-            child: BottomNavigation(
-              colorScheme: _colorScheme,
-              themeMode: themeMode,
+          setFilteredData: setFilteredData,
+          child: BottomNavigation(
               isDarkMode: _isDarkMode,
+              themeMode: themeMode,
               updateTheme: _updateTheme,
               updateColorScheme: _updateColorScheme,
-            ),
+              colorScheme: _colorScheme
           ),
-        ),
+        )),
       ),
     );
   }

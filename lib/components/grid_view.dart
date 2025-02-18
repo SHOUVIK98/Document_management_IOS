@@ -21,7 +21,7 @@ class GridLayout extends StatelessWidget {
   final dynamic parentFolderId;
   final Function? pasteFileOrFolder;
   final Function? homeRefreshData;
-
+  final bool? isDarkMode;
   // final bool isLightTheme;
   /*
   * onStarred: onStarred,
@@ -40,7 +40,8 @@ class GridLayout extends StatelessWidget {
       this.isTrashed = false,
       this.parentFolderId, 
       this.pasteFileOrFolder, 
-      this.homeRefreshData});
+      this.homeRefreshData,
+      this.isDarkMode});
 
   // @override
   // Widget build(BuildContext context) {
@@ -96,7 +97,7 @@ class GridLayout extends StatelessWidget {
 
     return GestureDetector(
       onLongPress: (){
-        showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId,pasteFileOrFolder,homeRefreshData);
+        showOptions(context, item, onStarred, renameFolder, deleteItem, isTrashed, parentFolderId,pasteFileOrFolder,homeRefreshData, colorScheme, isDarkMode!);
       },
       onTap: () {
         String fileName = item.name;
@@ -207,42 +208,44 @@ class GridLayout extends StatelessWidget {
                   size: 18.0,
                 ),
               ),
-            Positioned(
-              top: 0.0,
-              right: 0.0,
-              left: 125,
-              child: IconButton(
-                icon: Icon(
-                  Icons.more_vert,
-                  size: 24.0,
-                  color: colorScheme.secondary,
-                ),
-                onPressed: () {
-                  // Handle three dots button press
-                  print("Three dots button pressed for item: ${item.name}");
-                  showModalBottomSheet(
-                    context: context,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16.0),
-                        topRight: Radius.circular(16.0),
-                      ),
-                    ),
-                    builder: (BuildContext context) {
-                      return isTrashed
-                          ? BottomModalOptions(item, isTrashed: isTrashed)
-                          : BottomModalOptions(item,
-                              onStarred: onStarred,
-                              renameFolder: renameFolder,
-                              deleteItem: deleteItem,
-                              isTrashed: isTrashed,
-                              parentFolderId: parentFolderId,
-                              pasteFileOrFolder: pasteFileOrFolder,);
-                    },
-                  );
-                },
-              ),
-            ),
+            // Positioned(
+            //   top: 0.0,
+            //   right: 0.0,
+            //   left: 125,
+            //   child: IconButton(
+            //     icon: Icon(
+            //       Icons.more_vert,
+            //       size: 24.0,
+            //       color: colorScheme.secondary,
+            //     ),
+            //     onPressed: () {
+            //       // Handle three dots button press
+            //       print("Three dots button pressed for item: ${item.name}");
+            //       showModalBottomSheet(
+            //         context: context,
+            //         shape: const RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.only(
+            //             topLeft: Radius.circular(16.0),
+            //             topRight: Radius.circular(16.0),
+            //           ),
+            //         ),
+            //         builder: (BuildContext context) {
+            //           return isTrashed
+            //               ? BottomModalOptions(item, isTrashed: isTrashed, colorScheme: colorScheme,)
+            //               : BottomModalOptions(item,
+            //                   onStarred: onStarred,
+            //                   renameFolder: renameFolder,
+            //                   deleteItem: deleteItem,
+            //                   isTrashed: isTrashed,
+            //                   parentFolderId: parentFolderId,
+            //                   pasteFileOrFolder: pasteFileOrFolder,
+            //                   colorScheme: colorScheme,
+            //           );
+            //         },
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

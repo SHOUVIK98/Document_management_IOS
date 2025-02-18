@@ -193,12 +193,12 @@ class _UploadWidgetState extends State<UploadWidget> {
         "updatedOn": formattedCurrentDate,
       },
     );
-
     widget.onFilesAdded([newFolder]);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -210,6 +210,7 @@ class _UploadWidgetState extends State<UploadWidget> {
           },
           icon: Icons.upload_file,
           label: 'Upload File(s)',
+
         ),
         const SizedBox(width: 15),
         UploadButton(

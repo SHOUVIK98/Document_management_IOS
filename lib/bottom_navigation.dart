@@ -101,6 +101,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             themeMode: widget.themeMode,
             updateTheme: widget.updateTheme,
             updateColorScheme: widget.updateColorScheme,
+            isDarkMode: widget.isDarkMode,
             // isGridView: isGridView,
           ),
           SharedFragment(

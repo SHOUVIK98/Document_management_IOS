@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../data/create_fileStructure.dart';
 import '../widgets/bottom_modal_options.dart';
@@ -12,7 +13,9 @@ void showOptions(
     final bool isTrashed,
     final dynamic parentFolderId,
     final Function? pasteFileOrFolder,
-    final Function? homeRefreshData) {
+    final Function? homeRefreshData,
+    final ColorScheme colorScheme,
+    final bool isDarkMode) {
   showCupertinoModalPopup(
     context: context,
     builder: (BuildContext ctx) {
@@ -27,6 +30,8 @@ void showOptions(
         isTrashed: isTrashed,
         parentFolderId: parentFolderId,
         pasteFileOrFolder: pasteFileOrFolder,
+        colorScheme: colorScheme,
+        isDarkMode: isDarkMode,
       );
     },
   );

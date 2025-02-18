@@ -532,103 +532,6 @@ class _ProfileState extends State<Profile> {
 
   }
 
-  /// Builds the actual profile content once data is available
-  // Widget _buildProfileContent() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     children: [
-  //       // Header with background and avatar
-  //       Stack(
-  //         children: [
-  //           Container(
-  //             height: 180,
-  //             decoration: BoxDecoration(
-  //               gradient: LinearGradient(
-  //                 begin: Alignment.topCenter,
-  //                 end: Alignment.bottomCenter,
-  //                 colors: [
-  //                   Colors.white, // Start with white at the top
-  //                   widget.colorScheme.primary, // Blend into primary color at the bottom
-  //                 ],
-  //               ),
-  //               borderRadius: const BorderRadius.vertical(
-  //                 bottom: Radius.circular(30), // Keeps the rounded bottom corners
-  //               ),
-  //             ),
-
-  //           ),
-  //           Align(
-  //             alignment: Alignment.center,
-  //             child: Column(
-  //               children: [
-  //                 const SizedBox(height: 80),
-  //                 const CircleAvatar(
-  //                   radius: 70,
-  //                   backgroundImage:
-  //                   AssetImage('assets/profile_picture.png'),
-  //                 ),
-  //                 const SizedBox(height: 10),
-  //                 Text(
-  //                   widget.name ?? '',
-  //                   style: const TextStyle(
-  //                     fontSize: 20,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //                 const Text(
-  //                   'Software Engineer Level 1',
-  //                   style: TextStyle(
-  //                     fontSize: 16,
-  //                     color: CupertinoColors.systemGrey,
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 20),
-  //       Expanded(
-  //         child: ListView(
-  //           children: [
-  //             _buildProfileTile(
-  //               title: 'User Login',
-  //               subtitle: widget.login,
-  //               icon: CupertinoIcons.person,
-  //             ),
-  //             _buildDivider(),
-  //             _buildProfileTile(
-  //               title: 'Date of Birth',
-  //               subtitle: 'dd-mm-yyyy',
-  //               icon: CupertinoIcons.calendar,
-  //             ),
-  //             _buildDivider(),
-  //             _buildProfileTile(
-  //               title: 'Phone Number',
-  //               subtitle: widget.phoneNumber,
-  //               icon: CupertinoIcons.phone,
-  //             ),
-  //             _buildDivider(),
-  //             _buildProfileTile(
-  //               title: 'Email',
-  //               subtitle: widget.email,
-  //               icon: CupertinoIcons.mail,
-  //             ),
-  //             _buildDivider(),
-  //             _buildProfileTile(
-  //               title: 'About us',
-  //               subtitle: 'Know more about our team and goal',
-  //               icon: CupertinoIcons.info,
-  //               onTap: () {
-  //                 // Handle navigation
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
   Widget _buildProfileContent() {
     return CupertinoPageScaffold(
       child: Column(
@@ -731,7 +634,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  /// Builds a single iOS-styled profile tile
+  //// Builds a single iOS-styled profile tile
   Widget _buildProfileTile({
     required String title,
     required String? subtitle,

@@ -491,6 +491,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:document_management_main/components/grid_view.dart';
+
 // import 'package:document_management_main/data/file_data.dart';
 import 'package:document_management_main/utils/rename_folder_utils.dart';
 import 'package:document_management_main/components/list_view.dart';
@@ -508,17 +509,20 @@ class HomeFragment extends StatefulWidget {
   final ThemeMode themeMode;
   final void Function(bool isDark) updateTheme;
   final void Function(ColorScheme newScheme) updateColorScheme;
+  final bool isDarkMode;
+
   // final bool isGridView;
 
-  const HomeFragment({
-    super.key,
-    this.theme,
-    required this.colorScheme,
-    required this.themeMode,
-    required this.updateTheme,
-    required this.updateColorScheme,
-    // required this.isGridView,
-  });
+  const HomeFragment(
+      {super.key,
+      this.theme,
+      required this.colorScheme,
+      required this.themeMode,
+      required this.updateTheme,
+      required this.updateColorScheme,
+      required this.isDarkMode
+      // required this.isGridView,
+      });
 
   @override
   State<HomeFragment> createState() => _HomeFragmentState();
@@ -664,6 +668,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             deleteItem: _deleteFileOrFolder,
             pasteFileOrFolder: _pasteItem,
             homeRefreshData: _refreshDataAfterPaste,
+            isDarkMode: widget.isDarkMode,
           )
         : CustomListView(
             items: currentItems,
@@ -673,6 +678,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             deleteItem: _deleteFileOrFolder,
             pasteFileOrFolder: _pasteItem,
             homeRefreshData: _refreshDataAfterPaste,
+            isDarkMode: widget.isDarkMode,
           );
 
     final Widget content = _isLoading

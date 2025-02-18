@@ -1,3 +1,4 @@
+
 /*
 * DO NOT TOUCH THIS FILE, OR YOU WILL FACE THE WRATH OF THE DEMON(ME)
 * */
@@ -348,7 +349,7 @@ class FolderScreenWidget extends StatefulWidget {
     required this.fileItems,
     required this.folderName,
     required this.colorScheme,
-    this.isTrashed = false, 
+    this.isTrashed = false,
     required this.folderId,
     this.parentId,
     this.homeRefreshData,
@@ -547,25 +548,25 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
               Expanded(
                 child: _isLoading ? _buildShimmerPlaceholder() : localIsGridView
                     ? GridLayout(
-                        items: currentItems,
-                        onStarred: _addToStarred,
-                        colorScheme: widget.colorScheme,
-                        parentFolderId: widget.parentId,
-                        renameFolder: _renameFolder,
-                        deleteItem: _deleteFileOrFolder,
-                        isTrashed: widget.isTrashed,
-                        pasteFileOrFolder: pasteItem,
-                      )
+                  items: currentItems,
+                  onStarred: _addToStarred,
+                  colorScheme: widget.colorScheme,
+                  parentFolderId: widget.parentId,
+                  renameFolder: _renameFolder,
+                  deleteItem: _deleteFileOrFolder,
+                  isTrashed: widget.isTrashed,
+                  pasteFileOrFolder: pasteItem,
+                )
                     : CustomListView(
-                        items: currentItems,
-                        onStarred: _addToStarred,
-                        colorScheme: widget.colorScheme,
-                        parentFolderId: widget.parentId,
-                        renameFolder: _renameFolder,
-                        deleteItem: _deleteFileOrFolder,
-                        isTrashed: widget.isTrashed,
-                        pasteFileOrFolder: pasteItem,
-                      ),
+                  items: currentItems,
+                  onStarred: _addToStarred,
+                  colorScheme: widget.colorScheme,
+                  parentFolderId: widget.parentId,
+                  renameFolder: _renameFolder,
+                  deleteItem: _deleteFileOrFolder,
+                  isTrashed: widget.isTrashed,
+                  pasteFileOrFolder: pasteItem,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -584,13 +585,13 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
     );
   }
 
-    /// Shimmer placeholder while loading
+  /// Shimmer placeholder while loading
   Widget _buildShimmerPlaceholder() {
     return Shimmer.fromColors(
       baseColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+      CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
       highlightColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
+      CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
       child: ListView.builder(
         itemCount: 8,
         itemBuilder: (context, index) {

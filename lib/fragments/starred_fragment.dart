@@ -661,6 +661,7 @@ import '../utils/file_data_service_util.dart';
 
 class StarredFragment extends StatefulWidget {
   final ColorScheme colorScheme;
+
   // final bool isGridView;
 
   const StarredFragment({
@@ -676,6 +677,7 @@ class StarredFragment extends StatefulWidget {
 class _StarredFragmentState extends State<StarredFragment> {
   List<FileItemNew> allItems = [];
   bool _isLoading = true;
+
   // bool localIsGridView = false;
   late bool isGridView = false;
 
@@ -708,7 +710,7 @@ class _StarredFragmentState extends State<StarredFragment> {
     }
   }
 
-    /// Reset and refresh data
+  /// Reset and refresh data
   Future<void> _resetData() async {
     setState(() {
       _isLoading = true;
@@ -857,50 +859,68 @@ class _StarredFragmentState extends State<StarredFragment> {
       child: SafeArea(
         child: Stack(
           children: [
-            // if (starredItems.isNotEmpty)
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     // CupertinoButton(
-              //     //   padding: EdgeInsets.zero,
-              //     //   child: Icon(localIsGridView
-              //     //       ? CupertinoIcons.square_list
-              //     //       : CupertinoIcons.grid),
-              //     //   onPressed: _toggleView,
-              //     // ),
-              //     const SizedBox(width: 28.0),
-              //   ],
-              // ),
-              Expanded(
-                child: _isLoading
-                    ? _buildShimmerPlaceholder()
-                    : starredItems.isEmpty
-                        ? const Center(
-                            child: Text("No starred items"),
-                          )
-                        : isGridView
-                            ? GridLayout(
-                                items: starredItems,
-                                onStarred: _addToStarred,
-                                colorScheme: widget.colorScheme,
-                                renameFolder: _renameFolder,
-                              )
-                            : CustomListView(
-                                items: starredItems,
-                                onStarred: _addToStarred,
-                                colorScheme: widget.colorScheme,
-                                renameFolder: _renameFolder,
-                              ),
-              ),
+            _isLoading
+                ? _buildShimmerPlaceholder()
+                : starredItems.isEmpty
+                ? const Center(
+              child: Text("No starred items"),
+            )
+                : isGridView
+                ? GridLayout(
+              items: starredItems,
+              onStarred: _addToStarred,
+              colorScheme: widget.colorScheme,
+              renameFolder: _renameFolder,
+            )
+                : CustomListView(
+              items: starredItems,
+              onStarred: _addToStarred,
+              colorScheme: widget.colorScheme,
+              renameFolder: _renameFolder,
+            ),
             Positioned(
-                right: 16,
-                bottom: 16,
-                child: FloatingActionButtonWidget(
-                    folderName: "",
-                    onFilesAdded: _onFilesAdded,
-                    isFolderUpload: false,
-                    colorScheme: widget.colorScheme))
+              right: 16,
+              bottom: 16,
+              child: FloatingActionButtonWidget(
+                folderName: "",
+                onFilesAdded: _onFilesAdded,
+                isFolderUpload: false,
+                colorScheme: widget.colorScheme,
+              ),
+            ),
           ],
+          // children: [
+          //   Expanded(
+          //     child: _isLoading
+          //         ? _buildShimmerPlaceholder()
+          //         : starredItems.isEmpty
+          //             ? const Center(
+          //                 child: Text("No starred items"),
+          //               )
+          //             : isGridView
+          //                 ? GridLayout(
+          //                     items: starredItems,
+          //                     onStarred: _addToStarred,
+          //                     colorScheme: widget.colorScheme,
+          //                     renameFolder: _renameFolder,
+          //                   )
+          //                 : CustomListView(
+          //                     items: starredItems,
+          //                     onStarred: _addToStarred,
+          //                     colorScheme: widget.colorScheme,
+          //                     renameFolder: _renameFolder,
+          //                   ),
+          //   ),
+          //   Positioned(
+          //       right: 16,
+          //       bottom: 16,
+          //       child: FloatingActionButtonWidget(
+          //           folderName: "",
+          //           onFilesAdded: _onFilesAdded,
+          //           isFolderUpload: false,
+          //           colorScheme: widget.colorScheme)
+          //   )
+          // ],
         ),
       ),
     );

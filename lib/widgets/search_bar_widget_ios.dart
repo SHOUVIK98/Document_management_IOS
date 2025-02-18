@@ -11,8 +11,12 @@ class FileSearchScreen extends StatefulWidget {
 
   const FileSearchScreen(
       {super.key, required this.child, required this.setFilteredData});
+
   @override
-  _FileSearchScreenState createState() => _FileSearchScreenState();
+  State<FileSearchScreen> createState() {
+    return _FileSearchScreenState();
+  }
+
 }
 
 class _FileSearchScreenState extends State<FileSearchScreen> {

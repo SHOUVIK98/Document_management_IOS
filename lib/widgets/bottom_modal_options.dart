@@ -19,6 +19,8 @@ class BottomModalOptions extends StatelessWidget {
   final bool? isTrashed;
   final dynamic parentFolderId;
   final Function? pasteFileOrFolder;
+  final ColorScheme colorScheme;
+  final bool isDarkMode;
 
   const BottomModalOptions(
     this.itemData, {
@@ -29,6 +31,8 @@ class BottomModalOptions extends StatelessWidget {
     this.isTrashed,
     this.parentFolderId,
     this.pasteFileOrFolder,
+    required this.colorScheme,
+    required this.isDarkMode,
   });
 
   @override
@@ -98,224 +102,257 @@ class BottomModalOptions extends StatelessWidget {
       actions: [
         // If it's NOT trashed, show all the "normal" actions
         if (!(isTrashed ?? false)) ...[
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              showDialog(
-                context: context,
-                builder: (_) => FolderDialog(
-                  folderData: itemData,
-                  renameFolder: renameFolder,
-                ),
-              );
-              // Navigator.pop(context);
-              Navigator.of(context).pop();
-              print("Rename option selected");
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.drive_file_rename_outline),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Rename")
-              ],
-            ),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              Navigator.pop(context); // Close the modal
-              bool isFolder = itemData.isFolder;
-              String cutOrCopied = "cut";
-              String identifier = itemData.identifier;
-              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
-              await pasteDocument("home", context);
-              pasteFileOrFolder!();
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.home),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Move to Home")
-              ],
-            ),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              // Navigator.pop(context); // Close the modal
-              Navigator.of(context).pop();
-              bool isFolder = itemData.isFolder;
-              String cutOrCopied = "cut";
-              String identifier = itemData.identifier;
-              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.cut),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Cut")
-              ],
-            ),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context); // Close the modal
-              bool isFolder = itemData.isFolder;
-              String cutOrCopied = "copy";
-              String identifier = itemData.identifier;
-              cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.copy),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Copy")
-              ],
-            ),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () async {
-              Navigator.pop(context); // Close the modal
-              if (itemData.isFolder) {
-                String destinationIdentifier = itemData.identifier;
-                await pasteDocument(
-                  destinationItem: itemData,
-                  destinationIdentifier,
-                  context,
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  builder: (_) => FolderDialog(
+                    folderData: itemData,
+                    renameFolder: renameFolder,
+                  ),
                 );
+                // Navigator.pop(context);
+                Navigator.of(context).pop();
+                print("Rename option selected");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.drive_file_rename_outline),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Rename")
+                ],
+              ),
+            ),
+          ),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.pop(context); // Close the modal
+                bool isFolder = itemData.isFolder;
+                String cutOrCopied = "cut";
+                String identifier = itemData.identifier;
+                cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
+                await pasteDocument("home", context);
                 pasteFileOrFolder!();
-              }
-              print("Paste option selected");
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.paste),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Paste")
-              ],
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.home),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Move to Home")
+                ],
+              ),
             ),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              if (onStarred != null) {
-                onStarred!(itemData);
-              }
-              // Navigator.pop(context); // Close the modal
-              Navigator.of(context).pop();
-              print("Add/Remove Starred option selected");
-            },
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 100,
-                ),
-                const Icon(Icons.star),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(itemData.isStarred
-                    ? "Remove from Starred"
-                    : "Add to Starred"),
-              ],
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                // Navigator.pop(context); // Close the modal
+                Navigator.of(context).pop();
+                bool isFolder = itemData.isFolder;
+                String cutOrCopied = "cut";
+                String identifier = itemData.identifier;
+                cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.cut),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Cut")
+                ],
+              ),
             ),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context); // Close the modal
-              deleteItem!(itemData, parentFolderId);
-              print("Move to Trash option selected");
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(Icons.delete_forever_outlined),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Move to Trash")
-              ],
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context); // Close the modal
+                bool isFolder = itemData.isFolder;
+                String cutOrCopied = "copy";
+                String identifier = itemData.identifier;
+                cutOrCopyDocument(isFolder, cutOrCopied, identifier, itemData);
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.copy),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Copy")
+                ],
+              ),
             ),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context); // Close the modal
-              // deleteItem!(itemData, parentFolderId);
-              showCupertinoModalPopup(
-                context: context,
-                builder: (context) {
-                  return ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(20)), // Adjust radius as needed
-                    child: DetailsActivity(item: itemData),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () async {
+                Navigator.pop(context); // Close the modal
+                if (itemData.isFolder) {
+                  String destinationIdentifier = itemData.identifier;
+                  await pasteDocument(
+                    destinationItem: itemData,
+                    destinationIdentifier,
+                    context,
                   );
-                },
-              );
+                  pasteFileOrFolder!();
+                }
+                print("Paste option selected");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.paste),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Paste")
+                ],
+              ),
+            ),
+          ),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                if (onStarred != null) {
+                  onStarred!(itemData);
+                }
+                // Navigator.pop(context); // Close the modal
+                Navigator.of(context).pop();
+                print("Add/Remove Starred option selected");
+              },
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 100,
+                  ),
+                  const Icon(Icons.star),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(itemData.isStarred
+                      ? "Remove from Starred"
+                      : "Add to Starred"),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context); // Close the modal
+                deleteItem!(itemData, parentFolderId);
+                print("Move to Trash option selected");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(Icons.delete_forever_outlined),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Move to Trash")
+                ],
+              ),
+            ),
+          ),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context); // Close the modal
+                // deleteItem!(itemData, parentFolderId);
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(20)), // Adjust radius as needed
+                      child: DetailsActivity(item: itemData),
+                    );
+                  },
+                );
 
-              // DetailsActivity(item: itemData,);
-              print("Show Details and Activity of file or folder");
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 100,
-                ),
-                Icon(CupertinoIcons.info_circle),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Details & Activity")
-              ],
+                // DetailsActivity(item: itemData,);
+                print("Show Details and Activity of file or folder");
+              },
+              child: const Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                  ),
+                  Icon(CupertinoIcons.info_circle),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Details & Activity")
+                ],
+              ),
             ),
           ),
         ],
 
         // If it's trashed, show the "trash" actions
         if (isTrashed == true) ...[
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context); // Close the modal
-              // Handle delete permanently action
-              print("Delete Permanently selected");
-            },
-            child: const Text("Delete Permanently"),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context); // Close the modal
+                // Handle delete permanently action
+                print("Delete Permanently selected");
+              },
+              child: const Text("Delete Permanently"),
+            ),
           ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              Navigator.pop(context); // Close the modal
-              // Handle restore action
-              print("Restore selected");
-            },
-            child: const Text("Restore"),
+          Container(
+            color: isDarkMode?Colors.grey:Colors.transparent,
+            child: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context); // Close the modal
+                // Handle restore action
+                print("Restore selected");
+              },
+              child: const Text("Restore"),
+            ),
           ),
         ],
       ],
-      cancelButton: CupertinoActionSheetAction(
-        onPressed: () => Navigator.of(context).pop(),
-        child: const Text("Close"),
+      cancelButton: Container(
+        color: isDarkMode?Colors.grey:Colors.transparent,
+        child: CupertinoActionSheetAction(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text("Close"),
+        ),
       ),
     );
   }

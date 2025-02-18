@@ -208,6 +208,7 @@ class CustomListView extends StatelessWidget {
   final dynamic parentFolderId;
   final Function? pasteFileOrFolder;
   final Function? homeRefreshData;
+  final bool? isDarkMode;
 
   const CustomListView({
     super.key,
@@ -220,6 +221,7 @@ class CustomListView extends StatelessWidget {
     this.parentFolderId,
     this.pasteFileOrFolder,
     this.homeRefreshData,
+    this.isDarkMode
   });
 
   @override
@@ -254,7 +256,9 @@ class CustomListView extends StatelessWidget {
                 isTrashed,
                 parentFolderId,
                 pasteFileOrFolder,
-                homeRefreshData),
+                homeRefreshData,
+                colorScheme,
+                isDarkMode!),
             child: Row(
               children: [
                 // Leading icon
