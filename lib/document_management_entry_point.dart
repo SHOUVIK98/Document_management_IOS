@@ -240,12 +240,13 @@ class _DocumentManagementEntryPointState
                 // ),
               ],
             ),
-            trailing: const Row(mainAxisSize: MainAxisSize.min, children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                child: SearchBarWidget(),
-              ),
-            ])),
+            // trailing: const Row(mainAxisSize: MainAxisSize.min, children: [
+            //   Padding(
+            //     padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+            //     child: SearchBarWidget(),
+            //   ),
+            // ])
+        ),
         child: SafeArea(
           child: FileSearchScreen(
             setFilteredData: setFilteredData,
