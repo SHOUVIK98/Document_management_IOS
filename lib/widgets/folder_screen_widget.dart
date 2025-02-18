@@ -329,6 +329,7 @@ import 'package:document_management_main/data/create_fileStructure.dart';
 import 'package:document_management_main/data/file_class.dart';
 import 'package:document_management_main/utils/delete_item_utils.dart';
 import 'package:document_management_main/widgets/floating_action_button_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'search_bar_widget_ios.dart';
 // import 'package:document_management_main/data/file_data.dart';
@@ -361,7 +362,8 @@ class FolderScreenWidget extends StatefulWidget {
 
 class _FolderScreenWidget extends State<FolderScreenWidget> {
   List<FileItemNew> currentItems = [];
-  bool localIsGridView = false;
+  bool localIsGridView = true;
+  bool _isLoading = false;
 
   List<FileItemNew>? findFileItems(String folderName, List<FileItemNew> items) {
     for (final item in items) {
@@ -426,7 +428,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
         List<FileItemNew> fileItems = fileItem.children!;
         removeDeletedFiles(fileItems);
         currentItems = fileItems;
-
+      _isLoading = false;
         // removeDeletedFiles(widget.fileItems);
         // currentItems = widget.fileItems;
         // currentItems = fileStructure;
@@ -474,6 +476,9 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
   }
 
   void pasteItem() {
+    setState(() {
+      _isLoading = true;
+    });
     _refreshData();
     widget.homeRefreshData!();
   }
@@ -495,17 +500,22 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
           children: [
             CupertinoButton(
               padding: EdgeInsets.zero,
-              onPressed: _refreshData,
+              onPressed: (){
+                setState(() {
+                  _isLoading = true;
+                });
+                _refreshData();
+              },
               child: Icon(
                 CupertinoIcons.refresh,
                 color: widget.colorScheme.primary,
               ),
             ),
             const SizedBox(width: 12),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-              child: SearchBarWidget(),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+            //   child: SearchBarWidget(),
+            // ),
           ],
         ),
       ),
@@ -513,6 +523,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
         setFilteredData: setFilteredData,
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               if (currentItems.isNotEmpty)
                 Padding(
@@ -534,7 +545,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                   ),
                 ),
               Expanded(
-                child: localIsGridView
+                child: _isLoading ? _buildShimmerPlaceholder() : localIsGridView
                     ? GridLayout(
                         items: currentItems,
                         onStarred: _addToStarred,
@@ -556,19 +567,39 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                         pasteFileOrFolder: pasteItem,
                       ),
               ),
-              Positioned(
-                right: 16,
-                bottom: 16,
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
                 child: FloatingActionButtonWidget(
                   onFilesAdded: _onFilesAdded,
                   isFolderUpload: false,
                   folderName: "",
                   colorScheme: widget.colorScheme,
+                  parentFolderId: widget.parentId,
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+    /// Shimmer placeholder while loading
+  Widget _buildShimmerPlaceholder() {
+    return Shimmer.fromColors(
+      baseColor:
+          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+      highlightColor:
+          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
+      child: ListView.builder(
+        itemCount: 8,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            height: 60,
+            color: CupertinoColors.white,
+          );
+        },
       ),
     );
   }

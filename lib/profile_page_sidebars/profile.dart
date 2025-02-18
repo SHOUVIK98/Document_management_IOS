@@ -472,6 +472,9 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
+      theme: CupertinoThemeData(
+        brightness: widget.themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
+      ),
       home:  CupertinoPageScaffold(
         backgroundColor: widget.themeMode == ThemeMode.light
             ? Colors.white
@@ -641,7 +644,9 @@ class _ProfileState extends State<Profile> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      CupertinoColors.white,
+                      widget.themeMode == ThemeMode.light
+                              ? CupertinoColors.white // Light mode icon color
+                              : CupertinoColors.black,
                       widget.colorScheme.primary,
                     ],
                   ),
@@ -665,7 +670,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: CupertinoColors.black,
+                        color: widget.themeMode == ThemeMode.light ? Colors.black : Colors.white,
                       ),
                     ),
                     Text(

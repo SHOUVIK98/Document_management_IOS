@@ -214,38 +214,42 @@ class _DocumentManagementEntryPointState
         // or a modal sheet. For demonstration, we show a button in the nav bar
         // that triggers a Cupertino-style modal to replicate the “drawer” content.
         navigationBar: CupertinoNavigationBar(
-            middle: Text(
-              "Document Management",
-              style: TextStyle(
-                color: _colorScheme.primary,
-              ),
+          middle: Text(
+            "Document Management",
+            style: TextStyle(
+              color: _colorScheme.primary,
             ),
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Example: an icon to open a 'drawer-like' modal
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: _showDrawerModal, // see method below
-                  child: Icon(
-                    CupertinoIcons.square_list,
-                    color: _colorScheme.primary,
-                  ),
+          ),
+          leading: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Example: an icon to open a 'drawer-like' modal
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: _showDrawerModal, // see method below
+                child: Icon(
+                  CupertinoIcons.square_list,
+                  color: _colorScheme.primary,
                 ),
-                const SizedBox(width: 12),
-                // The trailing SearchBarWidget (assuming it’s already Cupertino-compatible):
-                // const Padding(
-                //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                //   child: SearchBarWidget(),
-                // ),
-              ],
-            ),
-            trailing: const Row(mainAxisSize: MainAxisSize.min, children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                child: SearchBarWidget(),
               ),
-            ])),
+              const SizedBox(width: 12),
+              // The trailing SearchBarWidget (assuming it’s already Cupertino-compatible):
+              // const Padding(
+              //   padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+              //   child: SearchBarWidget(),
+              // ),
+            ],
+          ),
+          // trailing: const Row(
+          //   mainAxisSize: MainAxisSize.min,=
+          //   children: [
+          //     Padding(
+          //       padding: EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+          //       child: SearchBarWidget(),
+          //     ),
+          //   ],
+          // ),
+        ),
         child: SafeArea(
           child: FileSearchScreen(
             setFilteredData: setFilteredData,

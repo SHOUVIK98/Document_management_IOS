@@ -19,118 +19,125 @@ class DetailsActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      home: CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: const Text("Info"),
-          trailing: CupertinoButton(
-            padding: EdgeInsets.zero,
-            child: const Text(
-              "Done",
-              style: TextStyle(color: CupertinoColors.activeBlue),
-            ),
-            onPressed: () => Navigator.pop(context),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text("Info"),
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: const Text(
+            "Done",
+            style: TextStyle(color: CupertinoColors.activeBlue),
           ),
+          onPressed: () => Navigator.pop(context),
         ),
-        child: SafeArea(
-          child: CupertinoScrollbar(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // File Preview
-                  Center(
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: CupertinoColors.systemGrey5,
-                      ),
-                      child: Icon(
-                        item.isFolder
-                            ? CupertinoIcons.folder_fill
-                            : CupertinoIcons.doc_text_fill,
-                        size: 60,
-                        color: CupertinoColors.systemGrey,
-                      ),
+      ),
+      child: SafeArea(
+        child: CupertinoScrollbar(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // File Preview
+                Center(
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: CupertinoColors.systemGrey5,
+                    ),
+                    child: Icon(
+                      item.isFolder
+                          ? CupertinoIcons.folder_fill
+                          : CupertinoIcons.doc_text_fill,
+                      size: 60,
+                      color: CupertinoColors.systemGrey,
                     ),
                   ),
-                  const SizedBox(height: 10),
-      
-                  // File Name & Type
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          item.name,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                const SizedBox(height: 10),
+
+                // File Name & Type
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        item.name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoColors.black,
+                          decoration:
+                              TextDecoration.none, // Fixes yellow underline
+                          decorationColor: Colors.transparent,
+                          fontFamily: '.SF UI Text',
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          item.isFolder ? "Folder" : "File",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: CupertinoColors.systemGrey,
-                          ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.isFolder ? "Folder" : "File",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: CupertinoColors.systemGrey,
+                          decoration:
+                              TextDecoration.none, // Fixes yellow underline
+                          decorationColor: Colors.transparent,
+                          fontFamily: '.SF UI Text',
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Open Button
+                // Center(
+                //   child: CupertinoButton.filled(
+                //     child: const Text("Open"),
+                //     onPressed: () {
+                //       // Implement open file logic
+                //     },
+                //   ),
+                // ),
+                const SizedBox(height: 20),
+
+                // File Details
+                _buildDetailSection("Information", [
+                  _buildDetailRow("Kind", item.isFolder ? "Folder" : "File"),
+                  item.isFolder
+                      ? _buildDetailRow("Size", "n/a")
+                      : FutureBuilder<int>(
+                          future: _getFileSize(item.filePath!),
+                          builder: (context, snapshot) {
+                            String fileSizeText = "Calculating...";
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              final sizeInBytes = snapshot.data!;
+                              final sizeInKB = sizeInBytes / 1024;
+                              final sizeInMB = sizeInKB / 1024;
+                              fileSizeText = sizeInMB >= 1
+                                  ? "${sizeInMB.toStringAsFixed(2)} MB"
+                                  : "${sizeInKB.toStringAsFixed(2)} KB";
+                            }
+                            return _buildDetailRow("Size", fileSizeText);
+                          },
+                        ),
+                  _buildDetailRow(
+                    "Created",
+                    DateFormat("dd MMM yyyy hh:mm a").format(
+                      DateTime.parse(item.otherDetails['createdOn']),
                     ),
                   ),
-                  const SizedBox(height: 10),
-      
-                  // Open Button
-                  // Center(
-                  //   child: CupertinoButton.filled(
-                  //     child: const Text("Open"),
-                  //     onPressed: () {
-                  //       // Implement open file logic
-                  //     },
-                  //   ),
-                  // ),
-                  const SizedBox(height: 20),
-      
-                  // File Details
-                  _buildDetailSection("Information", [
-                    _buildDetailRow("Kind", item.isFolder ? "Folder" : "File"),
-                    item.isFolder
-                        ? _buildDetailRow("Size", "n/a")
-                        : FutureBuilder<int>(
-                            future: _getFileSize(item.filePath!),
-                            builder: (context, snapshot) {
-                              String fileSizeText = "Calculating...";
-                              if (snapshot.connectionState ==
-                                      ConnectionState.done &&
-                                  snapshot.hasData) {
-                                final sizeInBytes = snapshot.data!;
-                                final sizeInKB = sizeInBytes / 1024;
-                                final sizeInMB = sizeInKB / 1024;
-                                fileSizeText = sizeInMB >= 1
-                                    ? "${sizeInMB.toStringAsFixed(2)} MB"
-                                    : "${sizeInKB.toStringAsFixed(2)} KB";
-                              }
-                              return _buildDetailRow("Size", fileSizeText);
-                            },
-                          ),
-                    _buildDetailRow(
-                      "Created",
-                      DateFormat("dd MMM yyyy hh:mm a").format(
-                        DateTime.parse(item.otherDetails['createdOn']),
-                      ),
+                  _buildDetailRow(
+                    "Modified",
+                    DateFormat("dd MMM yyyy hh:mm a").format(
+                      DateTime.parse(item.otherDetails['updatedOn']),
                     ),
-                    _buildDetailRow(
-                      "Modified",
-                      DateFormat("dd MMM yyyy hh:mm a").format(
-                        DateTime.parse(item.otherDetails['updatedOn']),
-                      ),
-                    ),
-                  ]),
-                ],
-              ),
+                  ),
+                ]),
+              ],
             ),
           ),
         ),
@@ -145,9 +152,13 @@ class DetailsActivity extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: CupertinoColors.activeBlue),
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: CupertinoColors.activeBlue,
+            decoration: TextDecoration.none, // Fixes yellow underline
+            decorationColor: Colors.transparent,
+            fontFamily: '.SF UI Text',
+          ),
         ),
         ...children,
         const SizedBox(height: 10),
@@ -166,11 +177,20 @@ class DetailsActivity extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               color: CupertinoColors.systemGrey,
+              decoration: TextDecoration.none, // Fixes yellow underline
+              decorationColor: Colors.transparent,
+              fontFamily: '.SF UI Text',
             ),
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(
+              fontSize: 16,
+              color: CupertinoColors.black,
+              decoration: TextDecoration.none, // Fixes yellow underline
+              decorationColor: Colors.transparent,
+              fontFamily: '.SF UI Text',
+            ),
           ),
         ],
       ),
