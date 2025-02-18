@@ -429,7 +429,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
         List<FileItemNew> fileItems = fileItem.children!;
         removeDeletedFiles(fileItems);
         currentItems = fileItems;
-        _isLoading = false;
+      _isLoading = false;
         // removeDeletedFiles(widget.fileItems);
         // currentItems = widget.fileItems;
         // currentItems = fileStructure;

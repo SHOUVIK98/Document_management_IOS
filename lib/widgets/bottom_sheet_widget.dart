@@ -143,44 +143,46 @@ class BottomSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPopupSurface(
-      isSurfacePainted: true,
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.4, // Ensures bottom sheet height is constrained
-        ),
-        decoration: const BoxDecoration(
-          color: CupertinoColors.systemBackground,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
+    return  CupertinoPopupSurface(
+        isSurfacePainted: true,
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.4, // Ensures bottom sheet height is constrained
+            // maxHeight: 250,
+          ),
+          decoration: const BoxDecoration(
+            color: CupertinoColors.systemBackground,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+          ),
+          child: SingleChildScrollView(
+             // Prevents vertical overflow
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Prevents unnecessary height expansion
+              children: <Widget>[
+                isFolderUpload
+                    ? UploadWidget.uploadWithinFolder(
+                  onFilesAdded: onFilesAdded,
+                  isFolderUpload: isFolderUpload,
+                  folderName: folderName,
+                  parentFolderId: parentFolderId,
+                )
+                    : UploadWidget(
+                  onFilesAdded: onFilesAdded,
+                  parentFolderId: parentFolderId,
+                ),
+                const SizedBox(height: 20), // Adds spacing at the bottom
+                CupertinoButton(
+                  child: const Text("Close"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
           ),
         ),
-        child: SingleChildScrollView( // Prevents vertical overflow
-          child: Column(
-            mainAxisSize: MainAxisSize.min, // Prevents unnecessary height expansion
-            children: <Widget>[
-              isFolderUpload
-                  ? UploadWidget.uploadWithinFolder(
-                onFilesAdded: onFilesAdded,
-                isFolderUpload: isFolderUpload,
-                folderName: folderName,
-                parentFolderId: parentFolderId,
-              )
-                  : UploadWidget(
-                onFilesAdded: onFilesAdded,
-                parentFolderId: parentFolderId,
-              ),
-              const SizedBox(height: 20), // Adds spacing at the bottom
-              CupertinoButton(
-                child: const Text("Close"),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+      );
   }
 }
