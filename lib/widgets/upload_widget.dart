@@ -18,11 +18,12 @@ class UploadWidget extends StatefulWidget {
   final bool isFolderUpload;
   final String? folderName;
   final Function(List<FileItemNew>) onFilesAdded;
+  final bool? isDarkMode;
 
   const UploadWidget({
     super.key,
     required this.onFilesAdded,
-    this.parentFolderId})
+    this.parentFolderId, this.isDarkMode})
       : isFolderUpload = false,
         folderName = null;
 
@@ -31,7 +32,7 @@ class UploadWidget extends StatefulWidget {
         required this.onFilesAdded,
         required this.isFolderUpload,
         required this.folderName,
-        this.parentFolderId})
+        this.parentFolderId, this.isDarkMode})
       : assert(isFolderUpload == true,
   'isFolderUpload must be true for uploadWithinFolder');
 
@@ -210,7 +211,7 @@ class _UploadWidgetState extends State<UploadWidget> {
           },
           icon: Icons.upload_file,
           label: 'Upload File(s)',
-
+          isDarkMode: widget.isDarkMode,
         ),
         const SizedBox(width: 15),
         UploadButton(
@@ -226,6 +227,7 @@ class _UploadWidgetState extends State<UploadWidget> {
           },
           icon: Icons.folder_open,
           label: 'Create Folder',
+          isDarkMode: widget.isDarkMode,
         ),
       ],
     );

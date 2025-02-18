@@ -132,13 +132,15 @@ class BottomSheetWidget extends StatelessWidget {
   final Function(List<FileItemNew>) onFilesAdded;
   final bool isFolderUpload;
   final String folderName;
+  final bool? isDarkMode;
 
   const BottomSheetWidget({
     super.key,
     required this.folderName,
     required this.onFilesAdded,
     required this.isFolderUpload,
-    this.parentFolderId,
+    this.parentFolderId, 
+    this.isDarkMode,
   });
 
   @override
@@ -151,9 +153,9 @@ class BottomSheetWidget extends StatelessWidget {
             maxHeight: MediaQuery.of(context).size.height * 0.4, // Ensures bottom sheet height is constrained
             // maxHeight: 250,
           ),
-          decoration: const BoxDecoration(
-            color: CupertinoColors.systemBackground,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: (isDarkMode ?? false) ? CupertinoColors.black : CupertinoColors.white ,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
             ),

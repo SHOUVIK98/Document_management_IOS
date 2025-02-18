@@ -115,6 +115,7 @@ class FloatingActionButtonWidget extends StatefulWidget {
   final String folderName;
   final Function(List<FileItemNew>) onFilesAdded;
   final ColorScheme colorScheme; // Simple color instead of ColorScheme
+  final bool? isDarkMode;
 
   const FloatingActionButtonWidget({
     super.key,
@@ -122,7 +123,8 @@ class FloatingActionButtonWidget extends StatefulWidget {
     required this.onFilesAdded,
     required this.isFolderUpload,
     required this.colorScheme,
-    this.parentFolderId,
+    this.parentFolderId, 
+    this.isDarkMode,
   });
 
   @override
@@ -144,6 +146,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
               isFolderUpload: widget.isFolderUpload,
               folderName: widget.folderName,
               parentFolderId: widget.parentFolderId,
+              isDarkMode: widget.isDarkMode,
             ),
           ),
         );

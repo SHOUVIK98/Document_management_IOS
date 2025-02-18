@@ -48,12 +48,15 @@ class UploadButton extends StatelessWidget {
   final VoidCallback onTap;
   final IconData icon;
   final String label;
+  final bool? isDarkMode;
 
   const UploadButton({
     super.key,
     required this.onTap,
     required this.icon,
-    required this.label,
+    required this.label, 
+    this.isDarkMode,
+    
   });
 
   @override
@@ -76,9 +79,9 @@ class UploadButton extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: CupertinoColors.label,
+            color: (isDarkMode ?? false) ? CupertinoColors.white : CupertinoColors.black,
             decoration: TextDecoration.none, // Fixes yellow underline
             decorationColor: Colors.transparent,
           ),
