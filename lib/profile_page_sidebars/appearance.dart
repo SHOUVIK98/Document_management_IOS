@@ -253,7 +253,7 @@ class _AppearanceState extends State<Appearance> {
         middle: Text(
           'Appearance Settings',
           style: TextStyle(
-            color: _isDarkMode ? CupertinoColors.white : CupertinoColors.black,
+            color: widget.colorScheme.primary,
             decoration: TextDecoration.none,
             decorationColor: CupertinoColors.transparent,
           ),

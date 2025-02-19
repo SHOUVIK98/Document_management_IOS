@@ -7,7 +7,8 @@ import '../data/create_fileStructure.dart';
 
 class DetailsActivity extends StatelessWidget {
   final FileItemNew item;
-  const DetailsActivity({super.key, required this.item});
+  final bool? isDarkMode;
+  const DetailsActivity({super.key, required this.item, this.isDarkMode});
 
   Future<int> _getFileSize(String url) async {
     final response = await http.head(Uri.parse(url));
@@ -21,6 +22,7 @@ class DetailsActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        backgroundColor: (isDarkMode ?? false) ? CupertinoColors.systemGrey : CupertinoColors.white,
         middle: const Text("Info"),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
@@ -32,112 +34,115 @@ class DetailsActivity extends StatelessWidget {
         ),
       ),
       child: SafeArea(
-        child: CupertinoScrollbar(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // File Preview
-                Center(
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: CupertinoColors.systemGrey5,
-                    ),
-                    child: Icon(
-                      item.isFolder
-                          ? CupertinoIcons.folder_fill
-                          : CupertinoIcons.doc_text_fill,
-                      size: 60,
-                      color: CupertinoColors.systemGrey,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // File Name & Type
-                Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        item.name,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: CupertinoColors.black,
-                          decoration:
-                              TextDecoration.none, // Fixes yellow underline
-                          decorationColor: Colors.transparent,
-                          fontFamily: '.SF UI Text',
-                        ),
+        child: Container(
+          color: (isDarkMode ?? false) ? const Color.fromARGB(255, 196, 196, 201) : CupertinoColors.white,
+          child: CupertinoScrollbar(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // File Preview
+                  Center(
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: CupertinoColors.systemGrey5,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        item.isFolder ? "Folder" : "File",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: CupertinoColors.systemGrey,
-                          decoration:
-                              TextDecoration.none, // Fixes yellow underline
-                          decorationColor: Colors.transparent,
-                          fontFamily: '.SF UI Text',
-                        ),
+                      child: Icon(
+                        item.isFolder
+                            ? CupertinoIcons.folder_fill
+                            : CupertinoIcons.doc_text_fill,
+                        size: 60,
+                        color: CupertinoColors.systemGrey,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-
-                // Open Button
-                // Center(
-                //   child: CupertinoButton.filled(
-                //     child: const Text("Open"),
-                //     onPressed: () {
-                //       // Implement open file logic
-                //     },
-                //   ),
-                // ),
-                const SizedBox(height: 20),
-
-                // File Details
-                _buildDetailSection("Information", [
-                  _buildDetailRow("Kind", item.isFolder ? "Folder" : "File"),
-                  item.isFolder
-                      ? _buildDetailRow("Size", "n/a")
-                      : FutureBuilder<int>(
-                          future: _getFileSize(item.filePath!),
-                          builder: (context, snapshot) {
-                            String fileSizeText = "Calculating...";
-                            if (snapshot.connectionState ==
-                                    ConnectionState.done &&
-                                snapshot.hasData) {
-                              final sizeInBytes = snapshot.data!;
-                              final sizeInKB = sizeInBytes / 1024;
-                              final sizeInMB = sizeInKB / 1024;
-                              fileSizeText = sizeInMB >= 1
-                                  ? "${sizeInMB.toStringAsFixed(2)} MB"
-                                  : "${sizeInKB.toStringAsFixed(2)} KB";
-                            }
-                            return _buildDetailRow("Size", fileSizeText);
-                          },
+                  const SizedBox(height: 10),
+          
+                  // File Name & Type
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          item.name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: CupertinoColors.black,
+                            decoration:
+                                TextDecoration.none, // Fixes yellow underline
+                            decorationColor: Colors.transparent,
+                            fontFamily: '.SF UI Text',
+                          ),
                         ),
-                  _buildDetailRow(
-                    "Created",
-                    DateFormat("dd MMM yyyy hh:mm a").format(
-                      DateTime.parse(item.otherDetails['createdOn']),
+                        const SizedBox(height: 4),
+                        Text(
+                          item.isFolder ? "Folder" : "File",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: CupertinoColors.systemGrey,
+                            decoration:
+                                TextDecoration.none, // Fixes yellow underline
+                            decorationColor: Colors.transparent,
+                            fontFamily: '.SF UI Text',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  _buildDetailRow(
-                    "Modified",
-                    DateFormat("dd MMM yyyy hh:mm a").format(
-                      DateTime.parse(item.otherDetails['updatedOn']),
+                  const SizedBox(height: 10),
+          
+                  // Open Button
+                  // Center(
+                  //   child: CupertinoButton.filled(
+                  //     child: const Text("Open"),
+                  //     onPressed: () {
+                  //       // Implement open file logic
+                  //     },
+                  //   ),
+                  // ),
+                  const SizedBox(height: 20),
+          
+                  // File Details
+                  _buildDetailSection("Information", [
+                    _buildDetailRow("Kind", item.isFolder ? "Folder" : "File"),
+                    item.isFolder
+                        ? _buildDetailRow("Size", "n/a")
+                        : FutureBuilder<int>(
+                            future: _getFileSize(item.filePath!),
+                            builder: (context, snapshot) {
+                              String fileSizeText = "Calculating...";
+                              if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                final sizeInBytes = snapshot.data!;
+                                final sizeInKB = sizeInBytes / 1024;
+                                final sizeInMB = sizeInKB / 1024;
+                                fileSizeText = sizeInMB >= 1
+                                    ? "${sizeInMB.toStringAsFixed(2)} MB"
+                                    : "${sizeInKB.toStringAsFixed(2)} KB";
+                              }
+                              return _buildDetailRow("Size", fileSizeText);
+                            },
+                          ),
+                    _buildDetailRow(
+                      "Created",
+                      DateFormat("dd MMM yyyy hh:mm a").format(
+                        DateTime.parse(item.otherDetails['createdOn']),
+                      ),
                     ),
-                  ),
-                ]),
-              ],
+                    _buildDetailRow(
+                      "Modified",
+                      DateFormat("dd MMM yyyy hh:mm a").format(
+                        DateTime.parse(item.otherDetails['updatedOn']),
+                      ),
+                    ),
+                  ]),
+                ],
+              ),
             ),
           ),
         ),

@@ -286,6 +286,8 @@ class _TrashState extends State<Trash> {
           : Brightness.light,
     );
 
+    final bool _isDarkMode = widget.themeMode == ThemeMode.light ? true : false;
+
     return CupertinoPageScaffold(
       backgroundColor: widget.themeMode == ThemeMode.dark
           ? Colors.black  // Dark mode background
@@ -319,13 +321,13 @@ class _TrashState extends State<Trash> {
                 children: [
                   CupertinoButton(
                     padding: EdgeInsets.zero,
+                    onPressed: _toggleViewMode,
                     child: Icon(
                       color: widget.colorScheme.primary,
                       localIsGridView
                           ? CupertinoIcons.list_bullet
                           : CupertinoIcons.square_grid_2x2,
                     ),
-                    onPressed: _toggleViewMode,
                   ),
                   const SizedBox(width: 28.0),
                 ],
@@ -344,11 +346,13 @@ class _TrashState extends State<Trash> {
                   items: trashedItems,
                   colorScheme: widget.colorScheme,
                   isTrashed: true,
+                  isDarkMode: _isDarkMode,
                 )
                     : CustomListView(
                   items: trashedItems,
                   colorScheme: widget.colorScheme,
                   isTrashed: true,
+                  isDarkMode: _isDarkMode,
                 ),
               ),
           ],
