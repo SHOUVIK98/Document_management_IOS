@@ -733,20 +733,25 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   /// Shimmer placeholder while loading
   Widget _buildShimmerPlaceholder() {
-    return Shimmer.fromColors(
-      baseColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
-      highlightColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
-      child: ListView.builder(
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            height: 60,
-            color: CupertinoColors.white,
-          );
-        },
+    // return Shimmer.fromColors(
+    //   baseColor:
+    //       CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+    //   highlightColor:
+    //       CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
+    //   child: ListView.builder(
+    //     itemCount: 8,
+    //     itemBuilder: (context, index) {
+    //       return Container(
+    //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    //         height: 60,
+    //         color: CupertinoColors.white,
+    //       );
+    //     },
+    //   ),
+    // );
+    return const Center(
+      child: CupertinoActivityIndicator(
+        radius: 20.0, // Increase the size of the loading indicator
       ),
     );
   }

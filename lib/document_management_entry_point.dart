@@ -143,7 +143,7 @@ class _DocumentManagementEntryPointState
   @override
   void initState() {
     super.initState();
-    themeMode = ThemeMode.system;
+    themeMode = ThemeMode.light;
     _colorScheme = ColorScheme.fromSwatch(
       brightness: _isDarkMode ? Brightness.dark : Brightness.light,
     );

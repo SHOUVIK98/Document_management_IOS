@@ -154,7 +154,7 @@ class BottomSheetWidget extends StatelessWidget {
             // maxHeight: 250,
           ),
           decoration: BoxDecoration(
-            color: (isDarkMode ?? false) ? CupertinoColors.black : CupertinoColors.white ,
+            color: (isDarkMode ?? false) ? CupertinoColors.systemGrey : CupertinoColors.white ,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),

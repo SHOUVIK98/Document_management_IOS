@@ -473,16 +473,18 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return CupertinoApp(
       theme: CupertinoThemeData(
-        brightness: widget.themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
+        brightness: widget.themeMode == ThemeMode.light
+            ? Brightness.light
+            : Brightness.dark,
       ),
-      home:  CupertinoPageScaffold(
+      home: CupertinoPageScaffold(
         backgroundColor: widget.themeMode == ThemeMode.light
             ? Colors.white
-            : Colors.black12,  // Lighter black for dark mode background
+            : Colors.black12, // Lighter black for dark mode background
         navigationBar: CupertinoNavigationBar(
           middle: Text(
             "User Profile",
-            style: TextStyle(color: widget.colorScheme.primary,fontSize: 22),
+            style: TextStyle(color: widget.colorScheme.primary, fontSize: 22),
           ),
           leading: GestureDetector(
             onTap: () => Navigator.pop(context),
@@ -521,7 +523,8 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         child: SafeArea(
-          child: _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
+          child:
+              _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
         ),
       ),
       // child: SafeArea(
@@ -529,7 +532,6 @@ class _ProfileState extends State<Profile> {
       //       _isLoading ? _buildShimmerPlaceholders() : _buildProfileContent(),
       // ),
     );
-
   }
 
   Widget _buildProfileContent() {
@@ -548,8 +550,8 @@ class _ProfileState extends State<Profile> {
                     end: Alignment.bottomCenter,
                     colors: [
                       widget.themeMode == ThemeMode.light
-                              ? CupertinoColors.white // Light mode icon color
-                              : CupertinoColors.black,
+                          ? CupertinoColors.white // Light mode icon color
+                          : CupertinoColors.black,
                       widget.colorScheme.primary,
                     ],
                   ),
@@ -573,7 +575,9 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: widget.themeMode == ThemeMode.light ? Colors.black : Colors.white,
+                        color: widget.themeMode == ThemeMode.light
+                            ? Colors.black
+                            : Colors.white,
                       ),
                     ),
                     Text(
@@ -702,119 +706,123 @@ class _ProfileState extends State<Profile> {
 
   /// Builds Shimmer-based placeholder UI while data loads
   Widget _buildShimmerPlaceholders() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Header placeholder
-        Stack(
-          children: [
-            Container(
-              height: 180,
-              decoration: BoxDecoration(
-                color: widget.colorScheme.primary.withOpacity(0.5),
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(30),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  const SizedBox(height: 80),
-                  // Shimmer for avatar
-                  Shimmer.fromColors(
-                    baseColor: CupertinoColors.systemGrey4,
-                    highlightColor: CupertinoColors.systemGrey3,
-                    child: Container(
-                      width: 140,
-                      height: 140,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: CupertinoColors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  // Shimmer for name
-                  Shimmer.fromColors(
-                    baseColor: CupertinoColors.systemGrey4,
-                    highlightColor: CupertinoColors.systemGrey3,
-                    child: Container(
-                      width: 120,
-                      height: 20,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  // Shimmer for subtext
-                  Shimmer.fromColors(
-                    baseColor: CupertinoColors.systemGrey4,
-                    highlightColor: CupertinoColors.systemGrey3,
-                    child: Container(
-                      width: 180,
-                      height: 16,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Expanded(
-          // A ListView of shimmer tiles
-          child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Shimmer.fromColors(
-                    baseColor: CupertinoColors.systemGrey4,
-                    highlightColor: CupertinoColors.systemGrey3,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 12.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 80,
-                                  height: 16,
-                                  color: CupertinoColors.white,
-                                ),
-                                const SizedBox(height: 4),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 8),
-                                  width: 140,
-                                  height: 14,
-                                  color: CupertinoColors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 24,
-                            height: 24,
-                            color: CupertinoColors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  _buildDivider(),
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: [
+    //     // Header placeholder
+    //     Stack(
+    //       children: [
+    //         Container(
+    //           height: 180,
+    //           decoration: BoxDecoration(
+    //             color: widget.colorScheme.primary.withOpacity(0.5),
+    //             borderRadius: const BorderRadius.vertical(
+    //               bottom: Radius.circular(30),
+    //             ),
+    //           ),
+    //         ),
+    //         Align(
+    //           alignment: Alignment.center,
+    //           child: Column(
+    //             children: [
+    //               const SizedBox(height: 80),
+    //               // Shimmer for avatar
+    //               Shimmer.fromColors(
+    //                 baseColor: CupertinoColors.systemGrey4,
+    //                 highlightColor: CupertinoColors.systemGrey3,
+    //                 child: Container(
+    //                   width: 140,
+    //                   height: 140,
+    //                   decoration: const BoxDecoration(
+    //                     shape: BoxShape.circle,
+    //                     color: CupertinoColors.white,
+    //                   ),
+    //                 ),
+    //               ),
+    //               const SizedBox(height: 10),
+    //               // Shimmer for name
+    //               Shimmer.fromColors(
+    //                 baseColor: CupertinoColors.systemGrey4,
+    //                 highlightColor: CupertinoColors.systemGrey3,
+    //                 child: Container(
+    //                   width: 120,
+    //                   height: 20,
+    //                   color: CupertinoColors.white,
+    //                 ),
+    //               ),
+    //               const SizedBox(height: 6),
+    //               // Shimmer for subtext
+    //               Shimmer.fromColors(
+    //                 baseColor: CupertinoColors.systemGrey4,
+    //                 highlightColor: CupertinoColors.systemGrey3,
+    //                 child: Container(
+    //                   width: 180,
+    //                   height: 16,
+    //                   color: CupertinoColors.white,
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //     const SizedBox(height: 20),
+    //     Expanded(
+    //       // A ListView of shimmer tiles
+    //       child: ListView.builder(
+    //         itemCount: 5,
+    //         itemBuilder: (context, index) {
+    //           return Column(
+    //             children: [
+    //               Shimmer.fromColors(
+    //                 baseColor: CupertinoColors.systemGrey4,
+    //                 highlightColor: CupertinoColors.systemGrey3,
+    //                 child: Container(
+    //                   padding: const EdgeInsets.symmetric(
+    //                       horizontal: 16.0, vertical: 12.0),
+    //                   child: Row(
+    //                     children: [
+    //                       Expanded(
+    //                         child: Column(
+    //                           crossAxisAlignment: CrossAxisAlignment.start,
+    //                           children: [
+    //                             Container(
+    //                               width: 80,
+    //                               height: 16,
+    //                               color: CupertinoColors.white,
+    //                             ),
+    //                             const SizedBox(height: 4),
+    //                             Container(
+    //                               margin: const EdgeInsets.only(top: 8),
+    //                               width: 140,
+    //                               height: 14,
+    //                               color: CupertinoColors.white,
+    //                             ),
+    //                           ],
+    //                         ),
+    //                       ),
+    //                       Container(
+    //                         width: 24,
+    //                         height: 24,
+    //                         color: CupertinoColors.white,
+    //                       ),
+    //                     ],
+    //                   ),
+    //                 ),
+    //               ),
+    //               _buildDivider(),
+    //             ],
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   ],
+    // );
+
+    return const Center(
+      child: CupertinoActivityIndicator(
+        radius: 20.0, // Increase the size of the loading indicator
+      ),
     );
   }
 }
-
-

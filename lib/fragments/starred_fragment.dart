@@ -786,20 +786,26 @@ class _StarredFragmentState extends State<StarredFragment> {
   }
 
   Widget _buildShimmerPlaceholder() {
-    return Shimmer.fromColors(
-      baseColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
-      highlightColor:
-          CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
-      child: ListView.builder(
-        itemCount: 8, // show as many placeholders as you like
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            height: 60,
-            color: CupertinoColors.white,
-          );
-        },
+    // return Shimmer.fromColors(
+    //   baseColor:
+    //       CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.3),
+    //   highlightColor:
+    //       CupertinoColors.systemGrey.resolveFrom(context).withOpacity(0.1),
+    //   child: ListView.builder(
+    //     itemCount: 8, // show as many placeholders as you like
+    //     itemBuilder: (context, index) {
+    //       return Container(
+    //         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    //         height: 60,
+    //         color: CupertinoColors.white,
+    //       );
+    //     },
+    //   ),
+    // );
+
+    return const Center(
+      child: CupertinoActivityIndicator(
+        radius: 20.0, // Increase the size of the loading indicator
       ),
     );
   }
@@ -862,22 +868,22 @@ class _StarredFragmentState extends State<StarredFragment> {
             _isLoading
                 ? _buildShimmerPlaceholder()
                 : starredItems.isEmpty
-                ? const Center(
-              child: Text("No starred items"),
-            )
-                : isGridView
-                ? GridLayout(
-              items: starredItems,
-              onStarred: _addToStarred,
-              colorScheme: widget.colorScheme,
-              renameFolder: _renameFolder,
-            )
-                : CustomListView(
-              items: starredItems,
-              onStarred: _addToStarred,
-              colorScheme: widget.colorScheme,
-              renameFolder: _renameFolder,
-            ),
+                    ? const Center(
+                        child: Text("No starred items"),
+                      )
+                    : isGridView
+                        ? GridLayout(
+                            items: starredItems,
+                            onStarred: _addToStarred,
+                            colorScheme: widget.colorScheme,
+                            renameFolder: _renameFolder,
+                          )
+                        : CustomListView(
+                            items: starredItems,
+                            onStarred: _addToStarred,
+                            colorScheme: widget.colorScheme,
+                            renameFolder: _renameFolder,
+                          ),
             Positioned(
               right: 16,
               bottom: 16,

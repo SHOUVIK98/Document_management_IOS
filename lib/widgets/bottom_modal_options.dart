@@ -297,7 +297,7 @@ class BottomModalOptions extends StatelessWidget {
                     return ClipRRect(
                       borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(20)), // Adjust radius as needed
-                      child: DetailsActivity(item: itemData),
+                      child: DetailsActivity(item: itemData, isDarkMode: isDarkMode,),
                     );
                   },
                 );
