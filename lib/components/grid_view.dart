@@ -114,7 +114,7 @@ class GridLayout extends StatelessWidget {
               folderId: item.identifier,
               isTrashed: isTrashed ? true : false,
               homeRefreshData:homeRefreshData,
-
+              isDarkMode: isDarkMode,
               // isLightTheme: isLightTheme,
             ),
             transitionsBuilder:

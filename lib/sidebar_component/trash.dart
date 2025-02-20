@@ -286,7 +286,7 @@ class _TrashState extends State<Trash> {
           : Brightness.light,
     );
 
-    final bool _isDarkMode = widget.themeMode == ThemeMode.light ? true : false;
+    final bool _isDarkMode = widget.themeMode == ThemeMode.light ? false : true;
 
     return CupertinoPageScaffold(
       backgroundColor: widget.themeMode == ThemeMode.dark
