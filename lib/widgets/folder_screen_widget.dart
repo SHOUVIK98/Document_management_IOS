@@ -343,6 +343,7 @@ class FolderScreenWidget extends StatefulWidget {
   final String folderId;
   final ColorScheme colorScheme;
   final Function? homeRefreshData;
+  final bool? isDarkMode;
 
   const FolderScreenWidget({
     super.key,
@@ -352,7 +353,8 @@ class FolderScreenWidget extends StatefulWidget {
     this.isTrashed = false,
     required this.folderId,
     this.parentId,
-    this.homeRefreshData,
+    this.homeRefreshData, 
+    this.isDarkMode,
   });
 
   @override
@@ -556,6 +558,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                   deleteItem: _deleteFileOrFolder,
                   isTrashed: widget.isTrashed,
                   pasteFileOrFolder: pasteItem,
+                  isDarkMode: widget.isDarkMode,
                 )
                     : CustomListView(
                   items: currentItems,
@@ -566,6 +569,7 @@ class _FolderScreenWidget extends State<FolderScreenWidget> {
                   deleteItem: _deleteFileOrFolder,
                   isTrashed: widget.isTrashed,
                   pasteFileOrFolder: pasteItem,
+                  isDarkMode: widget.isDarkMode,
                 ),
               ),
               Padding(

@@ -103,6 +103,7 @@ class BottomModalOptions extends StatelessWidget {
         // If it's NOT trashed, show all the "normal" actions
         if (!(isTrashed ?? false)) ...[
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () async {
@@ -132,6 +133,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () async {
@@ -144,10 +146,11 @@ class BottomModalOptions extends StatelessWidget {
                 pasteFileOrFolder!();
               },
               child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 100,
-                  ),
+                  // SizedBox(
+                  //   width: 100,
+                  // ),
                   Icon(Icons.home),
                   SizedBox(
                     width: 10,
@@ -158,6 +161,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -183,6 +187,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -207,6 +212,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () async {
@@ -237,6 +243,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -264,6 +271,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -286,6 +294,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -324,6 +333,7 @@ class BottomModalOptions extends StatelessWidget {
         // If it's trashed, show the "trash" actions
         if (isTrashed == true) ...[
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -335,6 +345,7 @@ class BottomModalOptions extends StatelessWidget {
             ),
           ),
           Container(
+            height: 45.0,
             color: isDarkMode?Colors.grey:Colors.transparent,
             child: CupertinoActionSheetAction(
               onPressed: () {
@@ -348,6 +359,7 @@ class BottomModalOptions extends StatelessWidget {
         ],
       ],
       cancelButton: Container(
+        height: 45.0,
         color: isDarkMode?Colors.grey:Colors.transparent,
         child: CupertinoActionSheetAction(
           onPressed: () => Navigator.of(context).pop(),
